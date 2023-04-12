@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servisgo_partner/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:servisgo_partner/theme.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darktheme,
-      home: const MyHomePage(),
+      home: const OnboardingScreen(),
     );
   }
 }

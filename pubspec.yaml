@@ -48,7 +48,7 @@ flutter_native_splash:
   ios: true
   web: false
   color: "#273a69"
-  image: "assets/images/ServisGo Logo Partner.png"
+  image: "assets/images/ServisGoLogoPartner.png"
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -66,7 +66,10 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/ServisGo Logo Partner.png
+    - assets/images/ServisGoLogoPartner.png
+    - assets/images/Onboarding1.png
+    - assets/images/Onboarding2.png
+    - assets/images/Onboarding3.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
