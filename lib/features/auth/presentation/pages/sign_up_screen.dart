@@ -12,6 +12,10 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? kDarkPrimaryColor
+            : kPrimaryColor;
     return Scaffold(
       body: Padding(
         padding:
@@ -24,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
               text: TextSpan(
                 text: "Create a Servis",
                 style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: kPrimaryColor,
+                      color: primaryColor,
                     ),
                 children: <TextSpan>[
                   TextSpan(
@@ -39,7 +43,7 @@ class SignUpScreen extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium!
-                        .copyWith(color: kPrimaryColor),
+                        .copyWith(color: primaryColor),
                   ),
                 ],
               ),
