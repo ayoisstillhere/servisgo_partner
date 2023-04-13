@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:servisgo_partner/features/onboarding/presentation/pages/onboarding_screen.dart';
-import 'package:servisgo_partner/theme.dart';
+import 'features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'theme.dart';
 
 void main() {
   runApp(const MyApp());
