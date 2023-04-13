@@ -4,12 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
-import 'forgot_password_screen.dart';
-import '../widgets/form_header.dart';
-import 'sign_up_screen.dart';
+import '../../../auth/presentation/pages/sign_in_screen.dart';
+import 'phone_number_screen.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +20,52 @@ class SignInScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: getProportionateScreenHeight(106)),
-            const FormHeader(
-              title: 'Sign In To ServisGo Partner',
-              subtitle: 'Welcome back, Sign into your account',
+            RichText(
+              text: TextSpan(
+                text: "Create a Servis",
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: kPrimaryColor,
+                    ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "Go",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(color: kCallToAction),
+                  ),
+                  TextSpan(
+                    text: " Partner\naccount",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(color: kPrimaryColor),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: getProportionateScreenHeight(40)),
+            SizedBox(height: getProportionateScreenHeight(52)),
             Form(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  _buildNameTextFormField(context),
+                  SizedBox(height: getProportionateScreenHeight(24)),
                   _buildEmailTextFormField(context),
                   SizedBox(height: getProportionateScreenHeight(24)),
-                  _buildPasswordTextFormField(context),
-                  SizedBox(height: getProportionateScreenHeight(24)),
-                  _buildForgotPassword(context),
-                  SizedBox(height: getProportionateScreenHeight(24)),
+                  _buildPasswordTextformField(context),
+                  SizedBox(height: getProportionateScreenHeight(40)),
                   DefaultButton(
-                    text: "Sign In",
-                    press: () {},
+                    text: "Sign Up",
+                    press: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PhoneNumberScreen()));
+                    },
                   ),
-                  SizedBox(height: getProportionateScreenHeight(42)),
+                  SizedBox(height: getProportionateScreenHeight(40)),
                   Center(child: SvgPicture.asset("assets/images/or.svg")),
-                  SizedBox(height: getProportionateScreenHeight(42)),
+                  SizedBox(height: getProportionateScreenHeight(30)),
                   Container(
                     height: getProportionateScreenHeight(56),
                     decoration: BoxDecoration(
@@ -56,25 +79,27 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(123)),
+                  SizedBox(height: getProportionateScreenHeight(88)),
                   Center(
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignInScreen(),
+                          ),
+                        );
                       },
                       child: RichText(
                         text: TextSpan(
-                            text: "Don't have an account? ",
+                            text: "Already have an account? ",
                             style:
                                 Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: kGreys,
                                     ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Sign Up',
+                                text: 'Sign In',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
@@ -95,25 +120,7 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildForgotPassword(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ForgotPasswordScreen()));
-      },
-      child: Text(
-        "Forgot Password?",
-        style: Theme.of(context)
-            .textTheme
-            .bodyLarge!
-            .copyWith(color: kCallToAction),
-      ),
-    );
-  }
-
-  TextFormField _buildPasswordTextFormField(BuildContext context) {
+  TextFormField _buildPasswordTextformField(BuildContext context) {
     return TextFormField(
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w600,
@@ -148,6 +155,24 @@ class SignInScreen extends StatelessWidget {
           ),
       decoration: InputDecoration(
         hintText: "Email",
+        hintStyle: TextStyle(
+          fontSize: getProportionateScreenWidth(16),
+          fontWeight: FontWeight.normal,
+          letterSpacing: 0,
+          color: kGreys,
+        ),
+      ),
+    );
+  }
+
+  TextFormField _buildNameTextFormField(BuildContext context) {
+    return TextFormField(
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            fontWeight: FontWeight.w600,
+            color: kPrimaryColor,
+          ),
+      decoration: InputDecoration(
+        hintText: "Full Name",
         hintStyle: TextStyle(
           fontSize: getProportionateScreenWidth(16),
           fontWeight: FontWeight.normal,
