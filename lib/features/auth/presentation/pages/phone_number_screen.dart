@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servisgo_partner/features/auth/presentation/pages/select_service_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';
@@ -74,6 +75,10 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       text: "Continue",
                       press: () {
                         _submitPhoneNumber(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SelectServiceScreen()));
                       },
                     ),
                   ],
