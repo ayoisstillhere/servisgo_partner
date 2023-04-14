@@ -45,7 +45,7 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
     String serviceClass,
     String partnerPfpURL,
   ) async {
-    _partnerCollection.doc(_auth.currentUser!.uid).get().then((user) {
+    await _partnerCollection.doc(_auth.currentUser!.uid).get().then((user) {
       if (!user.exists) {
         final newUser = PartnerModel(
           partnerId: _auth.currentUser!.uid,

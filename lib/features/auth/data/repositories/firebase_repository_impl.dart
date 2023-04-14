@@ -1,6 +1,11 @@
+import 'package:servisgo_partner/features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'package:servisgo_partner/features/auth/domain/repositories/firebase_repository.dart';
 
 class FirebaseRepositoryImpl implements FirebaseRepository {
+  final FirebaseRemoteDatasource firebaseRemoteDatasource;
+  FirebaseRepositoryImpl({
+    required this.firebaseRemoteDatasource,
+  });
   @override
   Future<void> createCurrentUser(
     String partnerName,
@@ -9,78 +14,64 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     String status,
     String serviceClass,
     String partnerPfpURL,
-  ) {
-    // TODO: implement createCurrentUser
-    throw UnimplementedError();
+  ) async {
+    return await firebaseRemoteDatasource.createCurrentUser(
+      partnerName,
+      partnerEmail,
+      partnerPhone,
+      status,
+      serviceClass,
+      partnerPfpURL,
+    );
   }
 
   @override
-  Future<String> getCurrentUid() {
-    // TODO: implement getCurrentUid
-    throw UnimplementedError();
-  }
+  Future<String> getCurrentUid() async =>
+      await firebaseRemoteDatasource.getCurrentUid();
 
   @override
-  Future<void> googleSignIn() {
-    // TODO: implement googleSignIn
-    throw UnimplementedError();
-  }
+  Future<void> googleSignIn() async =>
+      await firebaseRemoteDatasource.googleSignIn();
 
   @override
-  Future<void> googleSignUp() {
-    // TODO: implement googleSignUp
-    throw UnimplementedError();
-  }
+  Future<void> googleSignUp() async =>
+      await firebaseRemoteDatasource.googleSignUp();
 
   @override
-  Future<bool> isSignIn() {
-    // TODO: implement isSignIn
-    throw UnimplementedError();
-  }
+  Future<bool> isSignIn() async => await firebaseRemoteDatasource.isSignIn();
 
   @override
-  Future<void> resetPassword(String email) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
-  }
+  Future<void> resetPassword(String email) async =>
+      await firebaseRemoteDatasource.resetPassword(email);
 
   @override
   Future<void> setPhone(
     String phoneNumber,
-  ) {
-    // TODO: implement setPhone
-    throw UnimplementedError();
+  ) async {
+    return await firebaseRemoteDatasource.setPhone(phoneNumber);
   }
 
   @override
   Future<void> setServiceClass(
     String serviceClass,
-  ) {
-    // TODO: implement setServiceClass
-    throw UnimplementedError();
+  ) async {
+    return await firebaseRemoteDatasource.setServiceClass(serviceClass);
   }
 
   @override
   Future<void> signIn(
     String email,
     String password,
-  ) {
-    // TODO: implement signIn
-    throw UnimplementedError();
-  }
+  ) async =>
+      await firebaseRemoteDatasource.signIn(email, password);
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
-  }
+  Future<void> signOut() => firebaseRemoteDatasource.signOut();
 
   @override
   Future<void> signUp(
     String email,
     String password,
-  ) {
-    // TODO: implement signUp
-    throw UnimplementedError();
-  }
+  ) async =>
+      await firebaseRemoteDatasource.signUp(email, password);
 }

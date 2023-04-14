@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servisgo_partner/features/auth/presentation/pages/select_service_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
-import '../../../auth/presentation/widgets/form_header.dart';
+import '../bloc/signin_cubit/signin_cubit.dart';
 import '../widgets/form_error.dart';
+import '../widgets/form_header.dart';
 
 class PhoneNumberScreen extends StatefulWidget {
   const PhoneNumberScreen({super.key});
@@ -75,10 +77,6 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       text: "Continue",
                       press: () {
                         _submitPhoneNumber(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SelectServiceScreen()));
                       },
                     ),
                   ],
@@ -92,16 +90,20 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   }
 
   void _submitPhoneNumber(BuildContext context) {
-    // if (_phoneFormKey.currentState!.validate()) {
-    //   _phoneFormKey.currentState!.save();
-    //   BlocProvider.of<SigninCubit>(context)
-    //       .submitPhoneNumber(phoneNumber: _phoneController.text.trim());
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-    // }
+    if (_phoneFormKey.currentState!.validate()) {
+      _phoneFormKey.currentState!.save();
+      BlocProvider.of<SigninCubit>(context)
+          .submitPhoneNumber(phoneNumber: _phoneController.text.trim());
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const SelectServiceScreen()));
+    }
   }
 
   TextFormField _buildPhoneTextFornField(BuildContext context) {
+    final primaryColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? kDarkPrimaryColor
+            : kPrimaryColor;
     return TextFormField(
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -123,7 +125,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
       controller: _phoneController,
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w600,
-            color: kPrimaryColor,
+            color: primaryColor,
           ),
       decoration: InputDecoration(
         hintText: "Phone Number",

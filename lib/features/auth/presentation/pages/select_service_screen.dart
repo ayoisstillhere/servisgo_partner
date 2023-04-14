@@ -1,10 +1,13 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servisgo_partner/components/default_button.dart';
 
 import 'package:servisgo_partner/constants.dart';
+import 'package:servisgo_partner/features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
 import 'package:servisgo_partner/features/auth/presentation/widgets/form_header.dart';
+import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 
 import '../../../../size_config.dart';
 
@@ -23,6 +26,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
   bool ishandymanSelected = false;
   bool ispaintingSelected = false;
   bool isimprovementSelected = false;
+  String selectedClass = "";
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +58,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
+                      selectedClass = "Cleaning Services";
                     });
                   },
                   child: ServiceCard(
@@ -73,6 +78,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
+                      selectedClass = "Gardening Services";
                     });
                   },
                   child: ServiceCard(
@@ -98,6 +104,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
+                      selectedClass = "Plumbing Services";
                     });
                   },
                   child: ServiceCard(
@@ -117,6 +124,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
+                      selectedClass = "Electrical Services";
                     });
                   },
                   child: ServiceCard(
@@ -142,6 +150,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = true;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
+                      selectedClass = "Handyman Services";
                     });
                   },
                   child: ServiceCard(
@@ -161,6 +170,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = true;
                       isimprovementSelected = false;
+                      selectedClass = "Painting Services";
                     });
                   },
                   child: ServiceCard(
@@ -184,6 +194,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                     ishandymanSelected = false;
                     ispaintingSelected = false;
                     isimprovementSelected = true;
+                    selectedClass = "Home Improvement Services";
                   });
                 },
                 child: ServiceCard(
@@ -195,7 +206,22 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
               ),
             ),
             SizedBox(height: getProportionateScreenHeight(22)),
-            DefaultButton(text: "Confirm", press: () {})
+            DefaultButton(
+                text: "Confirm",
+                press: () {
+                  if (iscleaningSelected ||
+                      isgardeningSelected ||
+                      isplumbingSelected ||
+                      iselectricalSelected ||
+                      ishandymanSelected ||
+                      ispaintingSelected ||
+                      isimprovementSelected == true) {
+                    BlocProvider.of<SigninCubit>(context)
+                        .submitServiceClass(serviceClass: selectedClass);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const HomeScreen()));
+                  }
+                })
           ],
         )),
       ),
