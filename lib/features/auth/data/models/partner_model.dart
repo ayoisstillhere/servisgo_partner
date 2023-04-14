@@ -9,6 +9,7 @@ class PartnerModel extends PartnerEntity {
     required String partnerEmail,
     required String partnerPhone,
     required String status,
+    required String serviceClass,
     required String partnerPfpURL,
   }) : super(
           partnerId,
@@ -16,6 +17,7 @@ class PartnerModel extends PartnerEntity {
           partnerEmail,
           partnerPhone,
           status,
+          serviceClass,
           partnerPfpURL,
         );
 
@@ -26,6 +28,7 @@ class PartnerModel extends PartnerEntity {
       partnerEmail: json['partnerEmail'],
       partnerPhone: json['partnerPhone'],
       status: json['status'],
+      serviceClass: json['serviceClass'],
       partnerPfpURL: json['partnerPfpURL'],
     );
   }
@@ -37,6 +40,7 @@ class PartnerModel extends PartnerEntity {
       partnerEmail: (documentSnapshot.data()! as dynamic)['partnerEmail'],
       partnerPhone: (documentSnapshot.data()! as dynamic)['partnerPhone'],
       status: (documentSnapshot.data()! as dynamic)['status'],
+      serviceClass: (documentSnapshot.data()! as dynamic)['serviceClass'],
       partnerPfpURL: (documentSnapshot.data()! as dynamic)['partnerPfpURL'],
     );
   }
@@ -48,6 +52,7 @@ class PartnerModel extends PartnerEntity {
       "partnerEmail": partnerEmail,
       "partnerPhone": partnerPhone,
       "status": status,
+      "serviceClass": serviceClass,
       "partnerPfpURL": partnerPfpURL,
     };
   }

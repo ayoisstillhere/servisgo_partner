@@ -6,6 +6,7 @@ class PartnerEntity extends Equatable {
   final String partnerEmail;
   final String partnerPhone;
   final String status;
+  final String serviceClass;
   final String partnerPfpURL;
 
   const PartnerEntity(
@@ -14,6 +15,7 @@ class PartnerEntity extends Equatable {
     this.partnerEmail,
     this.partnerPhone,
     this.status,
+    this.serviceClass,
     this.partnerPfpURL,
   );
 
@@ -24,6 +26,7 @@ class PartnerEntity extends Equatable {
         partnerEmail,
         partnerPhone,
         status,
+        serviceClass,
         partnerPfpURL,
       ];
 }
