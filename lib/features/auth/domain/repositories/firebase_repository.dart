@@ -4,11 +4,11 @@ abstract class FirebaseRepository {
   Future<bool> isSignIn();
   Future<String> getCurrentUid();
   Future<void> createCurrentUser(
-    String name,
-    String email,
-    String phoneNumber,
-    String address,
-    String pfpURL,
+    String partnerName,
+    String partnerEmail,
+    String partnerPhone,
+    String status,
+    String partnerPfpURL,
   );
   Future<void> signOut();
   Future<void> googleSignIn();
