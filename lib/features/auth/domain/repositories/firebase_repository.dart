@@ -8,6 +8,7 @@ abstract class FirebaseRepository {
     String partnerEmail,
     String partnerPhone,
     String status,
+    String serviceClass,
     String partnerPfpURL,
   );
   Future<void> signOut();

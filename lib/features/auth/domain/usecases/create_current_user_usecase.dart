@@ -11,6 +11,7 @@ class CreateCurrentUserUsecase {
     String partnerEmail,
     String partnerPhone,
     String status,
+    String serviceClass,
     String partnerPfpURL,
   ) async {
     repository.createCurrentUser(
@@ -18,6 +19,7 @@ class CreateCurrentUserUsecase {
       partnerEmail,
       partnerPhone,
       status,
+      serviceClass,
       partnerPfpURL,
     );
   }

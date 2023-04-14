@@ -7,6 +7,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     String partnerEmail,
     String partnerPhone,
     String status,
+    String serviceClass,
     String partnerPfpURL,
   ) {
     // TODO: implement createCurrentUser
