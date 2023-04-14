@@ -8,7 +8,7 @@
 PRODUCT_NAME = servisgo_partner
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.servisgo.servisgoPartner
+PRODUCT_BUNDLE_IDENTIFIER = com.servisgo.partner;
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.servisgo. All rights reserved.
