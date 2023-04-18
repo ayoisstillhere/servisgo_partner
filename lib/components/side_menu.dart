@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
+import '../features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
+import '../main.dart';
 import 'drawer_tile.dart';
 import 'info_card.dart';
 
@@ -86,7 +91,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/log-out.svg",
                 title: "Log Out",
-                press: () {},
+                press: () async {
+                  await BlocProvider.of<AuthCubit>(context).loggedOut();
+                  await BlocProvider.of<SigninCubit>(context).submitSignOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyApp()));
+                },
               ),
             ],
           ),
