@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:servisgo_partner/features/auth/domain/usecases/set_service_class_usecase.dart';
+import 'features/auth/domain/usecases/set_service_class_usecase.dart';
 
 import 'features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'features/auth/data/repositories/firebase_repository_impl.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servisgo_partner/features/auth/presentation/pages/select_service_screen.dart';
+import 'select_service_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:servisgo_partner/components/default_button.dart';
-import 'package:servisgo_partner/constants.dart';
-import 'package:servisgo_partner/size_config.dart';
+import '../../../../components/default_button.dart';
+import '../../../../constants.dart';
+import '../../../../size_config.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
@@ -79,12 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 address: "8B Ododo Rd, Surulere",
                 city: "Surulere",
               ),
-              SizedBox(height: getProportionateScreenHeight(46)),
+              SizedBox(height: getProportionateScreenHeight(60)),
               DefaultButton(
                 text: "Go Offline",
                 press: () {},
               ),
-              SizedBox(height: getProportionateScreenHeight(70)),
+              SizedBox(height: getProportionateScreenHeight(60)),
             ],
           ),
         ),

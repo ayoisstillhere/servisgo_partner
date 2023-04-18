@@ -1,5 +1,5 @@
-import 'package:servisgo_partner/features/auth/data/datasources/firebase_remote_datasource.dart';
-import 'package:servisgo_partner/features/auth/domain/repositories/firebase_repository.dart';
+import '../datasources/firebase_remote_datasource.dart';
+import '../../domain/repositories/firebase_repository.dart';
 
 class FirebaseRepositoryImpl implements FirebaseRepository {
   final FirebaseRemoteDatasource firebaseRemoteDatasource;

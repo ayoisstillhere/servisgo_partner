@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+import '../../domain/entities/partner_entity.dart';
 
 class PartnerModel extends PartnerEntity {
   const PartnerModel({

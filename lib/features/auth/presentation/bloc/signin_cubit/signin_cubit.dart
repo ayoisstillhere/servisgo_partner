@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:servisgo_partner/features/auth/domain/usecases/set_service_class_usecase.dart';
-import 'package:servisgo_partner/features/auth/domain/usecases/signout_usecase.dart';
+import '../../../domain/usecases/set_service_class_usecase.dart';
+import '../../../domain/usecases/signout_usecase.dart';
 
 import '../../../domain/usecases/create_current_user_usecase.dart';
 import '../../../domain/usecases/google_signin_usecase.dart';
