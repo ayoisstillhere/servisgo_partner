@@ -67,56 +67,10 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/ServisGoLogoPartner.png
-    - assets/images/Onboarding1.png
-    - assets/images/Onboarding2.png
-    - assets/images/Onboarding3.png
-    - assets/images/Forgot_img.svg
-    - assets/images/or.svg
-    - assets/images/supportSvg.svg
-    - assets/images/notifiBell.svg
-    - assets/icons/eye-suffix.svg
-    - assets/icons/google_icon.svg
-    - assets/icons/Error.svg
-    - assets/icons/chat_icon.svg
-    - assets/icons/history_icon.svg
-    - assets/icons/home_icon.svg
-    - assets/icons/Location_icon.svg
-    - assets/icons/Menu_icon.svg
-    - assets/icons/Notifications-none.svg
-    - assets/icons/Notifications.svg
-    - assets/icons/CleaningIcon.png
-    - assets/icons/ElectricalIcon.png
-    - assets/icons/GardeningIcon.png
-    - assets/icons/HandymanIcon.png
-    - assets/icons/HomeImprovementIcon.png
-    - assets/icons/PaintingIcon.png
-    - assets/icons/PlumbingIcon.png
-    - assets/icons/ratingStar.svg
-    - assets/icons/ArrowLeft.svg
-    - assets/icons/clock.svg
-    - assets/icons/money.svg
-    - assets/icons/Star.svg
-    - assets/icons/Edit.svg
-    - assets/icons/Document.svg
-    - assets/icons/InfoCircle.svg
-    - assets/icons/Logout.svg
-    - assets/icons/Notification.svg
-    - assets/icons/Setting.svg
-    - assets/icons/ShieldDone.svg
-    - assets/icons/Wallet.svg
-    - assets/icons/Camera.svg
-    - assets/icons/addIcon.svg
-    - assets/icons/Send.svg
-    - assets/icons/calendarConfirm.svg
-    - assets/icons/ClockConfirm.svg
-    - assets/icons/DollarConfirm.svg
-    - assets/icons/locationPinConfirm.svg
-    - assets/icons/Iconly/Broken/Lock.svg
-    - assets/icons/Iconly/Broken/Send.svg
-    - assets/icons/Iconly/Broken/Star.svg
-    - assets/icons/calendar.svg
-    - assets/icons/work.svg
+    - assets/icons/Iconly/
+    - assets/icons/drawer/
+    - assets/icons/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
