@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
@@ -40,7 +41,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/profile.svg",
                 title: "View Profile",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileScreen()));
+                },
               ),
               DrawerTile(
                 primaryColor: primaryColor,
