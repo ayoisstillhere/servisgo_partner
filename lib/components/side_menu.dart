@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
 
 import '../../../../constants.dart';
@@ -37,6 +38,17 @@ class SideMenu extends StatelessWidget {
                 email: "george.ajayi@stu.cu.edu.ng",
               ),
               const Divider(color: kOutlineVariant),
+              DrawerTile(
+                primaryColor: primaryColor,
+                iconUrl: "assets/icons/homeDrawer.svg",
+                title: "Home",
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                },
+              ),
               DrawerTile(
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/profile.svg",
