@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/chat/presentation/pages/messages_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
 import 'package:servisgo_partner/features/tracker/presentation/pages/tracker_screen.dart';
@@ -76,7 +77,7 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  TrackerScreen()));
+                          builder: (context) => const TrackerScreen()));
                 },
               ),
               DrawerTile(
@@ -89,7 +90,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/messages.svg",
                 title: "Messages",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MessagesScreen()));
+                },
               ),
               const Divider(color: kOutlineVariant),
               DrawerTile(
