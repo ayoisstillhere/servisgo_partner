@@ -6,6 +6,7 @@ import 'package:servisgo_partner/features/chat/presentation/pages/messages_scree
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
+import 'package:servisgo_partner/features/security/presentation/pages/security_screen.dart';
 import 'package:servisgo_partner/features/support/presentation/pages/help_support_screen.dart';
 import 'package:servisgo_partner/features/tracker/presentation/pages/tracker_screen.dart';
 
@@ -115,7 +116,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/security.svg",
                 title: "Security",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SecurityScreen()));
+                },
               ),
               DrawerTile(
                 primaryColor: primaryColor,
