@@ -114,12 +114,6 @@ class SideMenu extends StatelessWidget {
               const Divider(color: kOutlineVariant),
               DrawerTile(
                 primaryColor: primaryColor,
-                iconUrl: "assets/icons/drawer/earnings.svg",
-                title: "Earnings",
-                press: () {},
-              ),
-              DrawerTile(
-                primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/security.svg",
                 title: "Security",
                 press: () {
