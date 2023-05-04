@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servisgo_partner/features/security/presentation/widgets/security_tile.dart';
+import '../widgets/security_tile.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';

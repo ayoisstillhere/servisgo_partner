@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servisgo_partner/features/tracker/presentation/widgets/no_results_body.dart';
+import '../widgets/no_results_body.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';

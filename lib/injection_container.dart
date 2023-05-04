@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'features/auth/domain/usecases/set_service_class_usecase.dart';
 
 import 'features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'features/auth/data/repositories/firebase_repository_impl.dart';
@@ -11,6 +10,7 @@ import 'features/auth/domain/usecases/google_signup_usecase.dart';
 import 'features/auth/domain/usecases/is_signin_usecase.dart';
 import 'features/auth/domain/usecases/reset_password_usecase.dart';
 import 'features/auth/domain/usecases/set_phone_usecase.dart';
+import 'features/auth/domain/usecases/set_service_class_usecase.dart';
 import 'features/auth/domain/usecases/signin_usecase.dart';
 import 'features/auth/domain/usecases/signout_usecase.dart';
 import 'features/auth/domain/usecases/signup_usecase.dart';

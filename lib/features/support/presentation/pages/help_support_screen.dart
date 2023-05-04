@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
+import '../../../home/presentation/pages/home_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';

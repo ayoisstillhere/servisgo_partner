@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:servisgo_partner/features/profile/presentation/widgets/profile_item_tile.dart';
+import '../widgets/profile_item_tile.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
