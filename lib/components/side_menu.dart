@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servisgo_partner/features/chat/presentation/pages/messages_screen.dart';
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
+import 'package:servisgo_partner/features/notifications/presentation/pages/notifications_screen.dart';
 import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
 import 'package:servisgo_partner/features/security/presentation/pages/security_screen.dart';
 import 'package:servisgo_partner/features/support/presentation/pages/help_support_screen.dart';
@@ -69,7 +70,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/notifications.svg",
                 title: "Notifications",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationsScreen()));
+                },
               ),
               const Divider(color: kOutlineVariant),
               DrawerTile(
