@@ -6,6 +6,7 @@ import 'package:servisgo_partner/features/chat/presentation/pages/messages_scree
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 import 'package:servisgo_partner/features/profile/presentation/pages/profile_screen.dart';
+import 'package:servisgo_partner/features/support/presentation/pages/help_support_screen.dart';
 import 'package:servisgo_partner/features/tracker/presentation/pages/tracker_screen.dart';
 
 import '../../../../constants.dart';
@@ -120,7 +121,12 @@ class SideMenu extends StatelessWidget {
                 primaryColor: primaryColor,
                 iconUrl: "assets/icons/drawer/support.svg",
                 title: "Support",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HelpSupportScreen()));
+                },
               ),
               const Divider(color: kOutlineVariant),
               DrawerTile(
