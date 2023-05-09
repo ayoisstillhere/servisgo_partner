@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 
+import '../../domain/entities/partner_entity.dart';
+
 abstract class FirebaseRemoteDatasource {
   Future<void> signUp(String email, String password);
   Future<void> signIn(String email, String password);
@@ -25,6 +27,7 @@ abstract class FirebaseRemoteDatasource {
   Future<void> setPhone(String phoneNumber);
   Future<void> setServiceClass(String serviceClass);
   Future<void> resetPassword(String email);
+  Stream<List<PartnerEntity>> getPartners();
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -148,7 +151,7 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
   @override
   Future<void> signOut() async {
     if (await googleSignin.isSignedIn()) {
-      googleSignin.disconnect();
+      await googleSignin.disconnect();
     }
     await _auth.signOut();
   }
@@ -162,5 +165,13 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
       email: email,
       password: password,
     );
+  }
+
+  @override
+  Stream<List<PartnerEntity>> getPartners() {
+    return _partnerCollection.snapshots().map((querySnapshot) => querySnapshot
+        .docs
+        .map((docSnapshot) => PartnerModel.fromSnapshot(docSnapshot))
+        .toList());
   }
 }

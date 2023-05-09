@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
+import '../bloc/partner_cubit/partner_cubit.dart';
 import '../widgets/job_request_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,16 +22,50 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    BlocProvider.of<PartnerCubit>(context).getPartners();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final primaryColor =
         MediaQuery.of(context).platformBrightness == Brightness.dark
             ? kDarkPrimaryColor
             : kPrimaryColor;
+    return BlocBuilder<PartnerCubit, PartnerState>(
+      builder: (_, state) {
+        if (state is PartnerLoaded) {
+          return _homeBody(primaryColor, context, state);
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  Scaffold _homeBody(
+      Color primaryColor, BuildContext context, PartnerLoaded partners) {
+    final partner = partners.partners.firstWhere(
+      (partner) => partner.partnerId == FirebaseAuth.instance.currentUser!.uid,
+      orElse: () => const PartnerModel(
+        partnerId: "",
+        partnerName: "",
+        partnerEmail: "",
+        partnerPhone: "",
+        status: "",
+        serviceClass: "",
+        partnerPfpURL: "",
+      ),
+    );
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
-        child: const SideMenu(),
+        child: SideMenu(
+          imgUrl: partner.partnerPfpURL,
+          name: partner.partnerName,
+          email: partner.partnerEmail,
+        )
       ),
       // body: OfflineHome(scaffoldKey: _scaffoldKey, primaryColor: primaryColor),
       body: SingleChildScrollView(

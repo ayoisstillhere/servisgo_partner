@@ -1,3 +1,5 @@
+import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+
 abstract class FirebaseRepository {
   Future<void> signUp(String email, String password);
   Future<void> signIn(String email, String password);
@@ -17,4 +19,5 @@ abstract class FirebaseRepository {
   Future<void> setPhone(String phoneNumber);
   Future<void> setServiceClass(String serviceClass);
   Future<void> resetPassword(String email);
+  Stream<List<PartnerEntity>> getPartners();
 }

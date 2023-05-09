@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:servisgo_partner/features/chat/presentation/pages/messages_screen.dart';
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
@@ -15,12 +16,20 @@ import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
 import '../features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
-import '../main.dart';
+import '../features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'drawer_tile.dart';
 import 'info_card.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({super.key});
+  const SideMenu({
+    Key? key,
+    required this.imgUrl,
+    required this.name,
+    required this.email,
+  }) : super(key: key);
+  final String imgUrl;
+  final String name;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +48,9 @@ class SideMenu extends StatelessWidget {
               InfoCard(
                 primaryColor: primaryColor,
                 image:
-                    "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                name: "Ajayi George",
-                email: "george.ajayi@stu.cu.edu.ng",
+                    imgUrl,
+                name: name,
+                email: email,
               ),
               const Divider(color: kOutlineVariant),
               DrawerTile(
@@ -142,8 +151,12 @@ class SideMenu extends StatelessWidget {
                 press: () async {
                   await BlocProvider.of<AuthCubit>(context).loggedOut();
                   await BlocProvider.of<SigninCubit>(context).submitSignOut();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MyApp()));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OnboardingScreen()),
+                    (route) => false,
+                  );
                 },
               ),
             ],

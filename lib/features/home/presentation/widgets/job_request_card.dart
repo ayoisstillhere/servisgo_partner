@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -172,20 +171,22 @@ class JobRequestCard extends StatelessWidget {
                 height: getProportionateScreenHeight(48),
                 width: getProportionateScreenWidth(48),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    address,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(4)),
-                  Text(
-                    city,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      address,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(4)),
+                    Text(
+                      city,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

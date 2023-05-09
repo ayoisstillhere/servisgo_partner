@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
-        child: const SideMenu(),
+        // child: const SideMenu(),
       ),
       body: SingleChildScrollView(
         child: Padding(

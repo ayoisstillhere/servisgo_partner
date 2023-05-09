@@ -1,3 +1,5 @@
+import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+
 import '../../domain/repositories/firebase_repository.dart';
 import '../datasources/firebase_remote_datasource.dart';
 
@@ -74,4 +76,9 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     String password,
   ) async =>
       await firebaseRemoteDatasource.signUp(email, password);
+
+  @override
+  Stream<List<PartnerEntity>> getPartners() {
+    return firebaseRemoteDatasource.getPartners();
+  }
 }

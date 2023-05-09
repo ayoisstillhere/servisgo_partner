@@ -25,7 +25,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
       key: _scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
-        child: const SideMenu(),
+        // child: const SideMenu(),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

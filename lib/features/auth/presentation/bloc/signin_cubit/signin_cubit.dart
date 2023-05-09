@@ -88,6 +88,7 @@ class SigninCubit extends Cubit<SigninState> {
   }
 
   Future<void> googleSignIn() async {
+    emit(SigninLoading());
     try {
       await googleSigninUsecase.call();
       emit(SigninSuccess());
@@ -99,6 +100,7 @@ class SigninCubit extends Cubit<SigninState> {
   }
 
   Future<void> googleSignUp() async {
+    emit(SigninLoading());
     try {
       await googleSignupUsecase.call();
       emit(SigninSuccess());
