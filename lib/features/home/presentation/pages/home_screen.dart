@@ -2,14 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
-import '../../../../components/default_button.dart';
-import '../../../../constants.dart';
-import '../../../../size_config.dart';
-
-import '../../../../components/hamburger_menu_button.dart';
-import '../../../../components/side_menu.dart';
+import 'package:servisgo_partner/features/home/presentation/widgets/offline_home.dart';
 import '../bloc/partner_cubit/partner_cubit.dart';
-import '../widgets/job_request_card.dart';
+import '../widgets/online_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,22 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? kDarkPrimaryColor
-            : kPrimaryColor;
     return BlocBuilder<PartnerCubit, PartnerState>(
       builder: (_, state) {
         if (state is PartnerLoaded) {
-          return _homeBody(primaryColor, context, state);
+          return _homeBody(context, state);
         }
         return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  Scaffold _homeBody(
-      Color primaryColor, BuildContext context, PartnerLoaded partners) {
+  Widget _homeBody(BuildContext context, PartnerLoaded partners) {
     final partner = partners.partners.firstWhere(
       (partner) => partner.partnerId == FirebaseAuth.instance.currentUser!.uid,
       orElse: () => const PartnerModel(
@@ -57,92 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
         partnerPfpURL: "",
       ),
     );
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: Drawer(
-          width: getProportionateScreenWidth(260),
-          child: SideMenu(
-            imgUrl: partner.partnerPfpURL,
-            name: partner.partnerName,
-            email: partner.partnerEmail,
-          )),
-      // body: OfflineHome(scaffoldKey: _scaffoldKey, primaryColor: primaryColor),
-      body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(32)),
-        child: Stack(
-          children: [
-            Positioned(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: getProportionateScreenHeight(114)),
-                    Center(
-                      child: Text(
-                        "JOB REQUESTS",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: primaryColor),
-                      ),
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(20)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ayodele Fagbami",
-                      date: "Sep 15",
-                      time: "14:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 2000,
-                      address: "14C Ola Crescent, High Gardens Estate, Ikota",
-                      city: "Lekki",
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ugochi Nkem",
-                      date: "Sep 13",
-                      time: "11:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 1000,
-                      address: "8B Ododo Rd, Surulere",
-                      city: "Surulere",
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ugochi Nkem",
-                      date: "Sep 13",
-                      time: "11:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 1000,
-                      address: "8B Ododo Rd, Surulere",
-                      city: "Surulere",
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              top: 58,
-              child: HamburgerMenuButton(
-                scaffoldKey: _scaffoldKey,
-                primaryColor: primaryColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    if (partner.status == "offline") {
+      return OfflineHome(scaffoldKey: _scaffoldKey, partner: partner);
+    } else {
+      return OnlineHome(scaffoldKey: _scaffoldKey, partner: partner);
+    }
   }
 }

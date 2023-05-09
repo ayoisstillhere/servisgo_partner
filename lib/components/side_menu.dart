@@ -26,10 +26,12 @@ class SideMenu extends StatelessWidget {
     required this.imgUrl,
     required this.name,
     required this.email,
+    required this.status,
   }) : super(key: key);
   final String imgUrl;
   final String name;
   final String email;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,7 @@ class SideMenu extends StatelessWidget {
             children: [
               InfoCard(
                 primaryColor: primaryColor,
-                image:
-                    imgUrl,
+                image: imgUrl,
                 name: name,
                 email: email,
               ),
@@ -159,6 +160,39 @@ class SideMenu extends StatelessWidget {
                   );
                 },
               ),
+              status == "online"
+                  ? GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(16),
+                          vertical: getProportionateScreenHeight(10),
+                        ),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: getProportionateScreenWidth(8),
+                              backgroundColor: Colors.red,
+                            ),
+                            SizedBox(width: getProportionateScreenWidth(12)),
+                            Text(
+                              "Go Offline",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: primaryColor,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 0,
+                      width: 0,
+                    ),
             ],
           ),
         ),
