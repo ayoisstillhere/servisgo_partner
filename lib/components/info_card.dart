@@ -25,9 +25,10 @@ class InfoCard extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Colors.white24,
             radius: getProportionateScreenWidth(20),
-            child: Image.network(
-              image,
-              fit: BoxFit.fill,
+            child: ClipOval(
+              child: Image.network(
+                image,
+              ),
             ),
           ),
           Positioned(
