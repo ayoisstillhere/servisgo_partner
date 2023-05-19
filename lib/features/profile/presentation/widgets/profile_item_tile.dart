@@ -19,14 +19,14 @@ class ProfileItemTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: getProportionateScreenWidth(60),
+          width: getProportionateScreenWidth(66),
           child: Text(
             field,
             style:
                 Theme.of(context).textTheme.bodyLarge!.copyWith(color: kGreys),
           ),
         ),
-        SizedBox(width: getProportionateScreenWidth(64)),
+        SizedBox(width: getProportionateScreenWidth(60)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

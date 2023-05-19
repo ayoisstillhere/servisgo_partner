@@ -190,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: getProportionateScreenHeight(16)),
               const ProfileItemTile(
-                field: "Locatin",
+                field: "Location",
                 value: "Lekki",
               ),
               SizedBox(height: getProportionateScreenHeight(114)),
