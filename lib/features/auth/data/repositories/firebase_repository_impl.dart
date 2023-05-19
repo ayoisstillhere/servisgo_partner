@@ -81,4 +81,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Stream<List<PartnerEntity>> getPartners() {
     return firebaseRemoteDatasource.getPartners();
   }
+  
+  @override
+  Future<void> updateStatus(String status) async => await firebaseRemoteDatasource.updateStatus(status);
 }

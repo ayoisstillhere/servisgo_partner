@@ -20,4 +20,5 @@ abstract class FirebaseRepository {
   Future<void> setServiceClass(String serviceClass);
   Future<void> resetPassword(String email);
   Stream<List<PartnerEntity>> getPartners();
+  Future<void> updateStatus(String status);
 }

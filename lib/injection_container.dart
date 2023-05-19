@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:servisgo_partner/features/home/domain/usecases/get_partners_usecase.dart';
+import 'package:servisgo_partner/features/home/domain/usecases/update_status_usecase.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
 
 import 'features/auth/data/datasources/firebase_remote_datasource.dart';
@@ -36,8 +37,10 @@ Future<void> init() async {
         resetPasswordUsecase: sl.call(),
         setServiceClassUsecase: sl.call(),
       ));
-  sl.registerFactory<PartnerCubit>(
-      () => PartnerCubit(getPartnersUsecase: sl.call()));
+  sl.registerFactory<PartnerCubit>(() => PartnerCubit(
+        getPartnersUsecase: sl.call(),
+        updateStatusUsecase: sl.call(),
+      ));
 
   //!useCae
   sl.registerLazySingleton<IsSigninUsecase>(
@@ -64,6 +67,8 @@ Future<void> init() async {
       () => ResetPasswordUsecase(repository: sl.call()));
   sl.registerLazySingleton<GetPartnersUsecase>(
       () => GetPartnersUsecase(repository: sl.call()));
+  sl.registerLazySingleton<UpdateStatusUsecase>(
+      () => UpdateStatusUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

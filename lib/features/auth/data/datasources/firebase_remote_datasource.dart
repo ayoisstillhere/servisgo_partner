@@ -28,6 +28,7 @@ abstract class FirebaseRemoteDatasource {
   Future<void> setServiceClass(String serviceClass);
   Future<void> resetPassword(String email);
   Stream<List<PartnerEntity>> getPartners();
+  Future<void> updateStatus(String status);
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -173,5 +174,12 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
         .docs
         .map((docSnapshot) => PartnerModel.fromSnapshot(docSnapshot))
         .toList());
+  }
+  
+  @override
+  Future<void> updateStatus(String status) async {
+    await _partnerCollection.doc(_auth.currentUser!.uid).update({
+      'status': status,
+    });
   }
 }

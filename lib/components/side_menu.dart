@@ -16,6 +16,7 @@ import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
 import '../features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
+import '../features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
 import '../features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'drawer_tile.dart';
 import 'info_card.dart';
@@ -162,7 +163,13 @@ class SideMenu extends StatelessWidget {
               ),
               status == "online"
                   ? GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        update(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()));
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: getProportionateScreenWidth(16),
@@ -198,5 +205,9 @@ class SideMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> update(BuildContext context) async {
+    await BlocProvider.of<PartnerCubit>(context).updateStatus("offline");
   }
 }

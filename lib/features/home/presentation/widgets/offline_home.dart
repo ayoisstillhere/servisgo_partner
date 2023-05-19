@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
+import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
@@ -88,11 +91,21 @@ class OfflineHome extends StatelessWidget {
                 horizontal: getProportionateScreenWidth(32)),
             child: DefaultButton(
               text: "Go Online",
-              press: () {},
+              press: () {
+                update(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              },
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> update(BuildContext context) async {
+    await BlocProvider.of<PartnerCubit>(context).updateStatus("online");
   }
 }
