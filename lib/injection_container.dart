@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:servisgo_partner/features/auth/domain/usecases/update_name_usecase.dart';
+import 'package:servisgo_partner/features/auth/domain/usecases/update_phone_usecase.dart';
 import 'package:servisgo_partner/features/home/domain/usecases/get_partners_usecase.dart';
 import 'package:servisgo_partner/features/home/domain/usecases/update_status_usecase.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
@@ -40,6 +42,8 @@ Future<void> init() async {
   sl.registerFactory<PartnerCubit>(() => PartnerCubit(
         getPartnersUsecase: sl.call(),
         updateStatusUsecase: sl.call(),
+        updateNameUsecase: sl.call(),
+        updatePhoneUsecase: sl.call(),
       ));
 
   //!useCae
@@ -69,6 +73,10 @@ Future<void> init() async {
       () => GetPartnersUsecase(repository: sl.call()));
   sl.registerLazySingleton<UpdateStatusUsecase>(
       () => UpdateStatusUsecase(repository: sl.call()));
+  sl.registerLazySingleton<UpdateNameUsecase>(
+      () => UpdateNameUsecase(repository: sl.call()));
+  sl.registerLazySingleton<UpdatePhoneUsecase>(
+      () => UpdatePhoneUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

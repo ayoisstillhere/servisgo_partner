@@ -15,7 +15,7 @@ class ProfileItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
@@ -34,9 +34,6 @@ class ProfileItemTile extends StatelessWidget {
               Text(
                 value,
                 style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(6),
               ),
               const Divider(),
             ],

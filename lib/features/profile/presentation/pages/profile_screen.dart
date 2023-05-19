@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
+import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
@@ -23,6 +26,24 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    _nameController =
+        TextEditingController(text: widget.currentPartner.partnerName);
+    _phoneController =
+        TextEditingController(text: widget.currentPartner.partnerPhone);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(height: getProportionateScreenHeight(8)),
                       Text(
-                        "Cleaner",
+                        widget.currentPartner.serviceClass,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -173,35 +194,113 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: getProportionateScreenHeight(32)),
-              const ProfileItemTile(
-                field: "Name",
-                value: "Blessing Ornu",
+              SizedBox(height: getProportionateScreenHeight(48)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: getProportionateScreenWidth(66),
+                    child: Text(
+                      "Name",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: kGreys),
+                    ),
+                  ),
+                  SizedBox(width: getProportionateScreenWidth(60)),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: getProportionateScreenHeight(30),
+                          child: TextFormField(
+                            controller: _nameController,
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              fillColor: Colors.transparent,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        const Divider(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: getProportionateScreenHeight(16)),
-              const ProfileItemTile(
-                field: "Phone",
-                value: "08093449931",
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: getProportionateScreenWidth(66),
+                    child: Text(
+                      "Phone",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: kGreys),
+                    ),
+                  ),
+                  SizedBox(width: getProportionateScreenWidth(60)),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: getProportionateScreenHeight(30),
+                          child: TextFormField(
+                            controller: _phoneController,
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              fillColor: Colors.transparent,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        const Divider(),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: getProportionateScreenHeight(16)),
-              const ProfileItemTile(
+              SizedBox(height: getProportionateScreenHeight(24)),
+              ProfileItemTile(
                 field: "Email",
-                value: "bornu@gmail.com",
+                value: widget.currentPartner.partnerEmail,
               ),
-              SizedBox(height: getProportionateScreenHeight(16)),
-              const ProfileItemTile(
-                field: "Location",
-                value: "Lekki",
-              ),
-              SizedBox(height: getProportionateScreenHeight(114)),
+              SizedBox(height: getProportionateScreenHeight(100)),
               DefaultButton(
                 text: "Save Changes",
-                press: () {},
+                press: () {
+                  _updateName(context);
+                  _updatePhone(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                },
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _updateName(BuildContext context) async {
+    await BlocProvider.of<PartnerCubit>(context).updateName(
+      _nameController.text.trim(),
+    );
+  }
+
+  Future<void> _updatePhone(BuildContext context) async {
+    await BlocProvider.of<PartnerCubit>(context).updatePhone(
+      _phoneController.text.trim(),
     );
   }
 }
