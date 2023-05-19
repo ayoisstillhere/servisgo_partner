@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
@@ -29,9 +28,7 @@ class OnlineHome extends StatelessWidget {
       drawer: Drawer(
           width: getProportionateScreenWidth(260),
           child: SideMenu(
-            imgUrl: partner.partnerPfpURL,
-            name: partner.partnerName,
-            email: partner.partnerEmail, status: partner.status,
+            currentPartner: partner,
           )),
       // body: OfflineHome(scaffoldKey: _scaffoldKey, primaryColor: primaryColor),
       body: Padding(

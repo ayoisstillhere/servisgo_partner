@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/profile_item_tile.dart';
+
+import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../widgets/profile_item_tile.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    Key? key,
+    required this.currentPartner,
+  }) : super(key: key);
+  final PartnerEntity currentPartner;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -28,7 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
-        // child: const SideMenu(),
+        child: SideMenu(
+          currentPartner: widget.currentPartner,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

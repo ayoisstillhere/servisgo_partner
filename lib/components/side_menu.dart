@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
 import 'package:servisgo_partner/features/chat/presentation/pages/messages_screen.dart';
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
@@ -24,15 +25,9 @@ import 'info_card.dart';
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
-    required this.imgUrl,
-    required this.name,
-    required this.email,
-    required this.status,
+    required this.currentPartner,
   }) : super(key: key);
-  final String imgUrl;
-  final String name;
-  final String email;
-  final String status;
+  final PartnerEntity currentPartner;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +36,7 @@ class SideMenu extends StatelessWidget {
             ? kDarkPrimaryColor
             : kPrimaryColor;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: getProportionateScreenWidth(260),
         height: double.infinity,
         // color: Colors.blue,
@@ -50,9 +45,9 @@ class SideMenu extends StatelessWidget {
             children: [
               InfoCard(
                 primaryColor: primaryColor,
-                image: imgUrl,
-                name: name,
-                email: email,
+                image: currentPartner.partnerPfpURL,
+                name: currentPartner.partnerName,
+                email: currentPartner.partnerEmail,
               ),
               const Divider(color: kOutlineVariant),
               DrawerTile(
@@ -74,7 +69,7 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProfileScreen()));
+                          builder: (context) => ProfileScreen(currentPartner: currentPartner,)));
                 },
               ),
               DrawerTile(
@@ -161,7 +156,7 @@ class SideMenu extends StatelessWidget {
                   );
                 },
               ),
-              status == "online"
+              currentPartner.status == "online"
                   ? GestureDetector(
                       onTap: () {
                         update(context);
