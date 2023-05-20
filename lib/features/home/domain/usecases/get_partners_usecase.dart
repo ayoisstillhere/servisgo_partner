@@ -6,7 +6,6 @@ class GetPartnersUsecase {
   GetPartnersUsecase({
     required this.repository,
   });
-  
-  Stream<List<PartnerEntity>> call() => repository.getPartners();
 
+  Stream<List<PartnerEntity>> call() => repository.getPartners();
 }

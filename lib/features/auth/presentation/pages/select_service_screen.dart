@@ -57,7 +57,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
-                      selectedClass = "Cleaner";
+                      selectedClass = "Cleaning";
                     });
                   },
                   child: ServiceCard(
@@ -77,7 +77,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
-                      selectedClass = "Gardener";
+                      selectedClass = "Gardening";
                     });
                   },
                   child: ServiceCard(
@@ -103,7 +103,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
-                      selectedClass = "Plumber";
+                      selectedClass = "Plumbing";
                     });
                   },
                   child: ServiceCard(
@@ -123,7 +123,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = false;
                       isimprovementSelected = false;
-                      selectedClass = "Electrician";
+                      selectedClass = "Electrical";
                     });
                   },
                   child: ServiceCard(
@@ -169,7 +169,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                       ishandymanSelected = false;
                       ispaintingSelected = true;
                       isimprovementSelected = false;
-                      selectedClass = "Painter";
+                      selectedClass = "Painting";
                     });
                   },
                   child: ServiceCard(
@@ -193,7 +193,7 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                     ishandymanSelected = false;
                     ispaintingSelected = false;
                     isimprovementSelected = true;
-                    selectedClass = "Home Improvement";
+                    selectedClass = "Improve";
                   });
                 },
                 child: ServiceCard(
