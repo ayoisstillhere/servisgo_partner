@@ -59,10 +59,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : kPrimaryColor;
     final List ratings = widget.currentPartner.ratings;
     double sum = 0;
-    for (int rating in ratings) {
-      sum += rating;
+    double avgRating = 0;
+    if (ratings.isNotEmpty) {
+      for (int rating in ratings) {
+        sum += rating;
+      }
+       avgRating = sum / ratings.length;
+    } else {
+      avgRating = 0;
     }
-    final double avgRating = sum / ratings.length;
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
