@@ -153,12 +153,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             },
                           );
-                        
                         },
                         child: Container(
                           height: getProportionateScreenHeight(48),
                           width: getProportionateScreenWidth(48),
-                          padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+                          padding:
+                              EdgeInsets.all(getProportionateScreenWidth(8)),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: kCallToAction,
@@ -231,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     children: [
                       Text(
-                        "6",
+                        widget.currentPartner.completed.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge!
@@ -362,13 +362,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-   pickImage(ImageSource source, BuildContext context) async {
+  pickImage(ImageSource source, BuildContext context) async {
     final ImagePicker imagePicker = ImagePicker();
 
     XFile? file = await imagePicker.pickImage(source: source);
     Uint8List image = await file!.readAsBytes();
 
-    String pfpUrl = await BlocProvider.of<PartnerPfpCubit>(context).uploadImage(image);
+    String pfpUrl =
+        await BlocProvider.of<PartnerPfpCubit>(context).uploadImage(image);
 
     await BlocProvider.of<PartnerPfpCubit>(context).updatePartnerPfpUrl(pfpUrl);
 
