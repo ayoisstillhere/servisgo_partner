@@ -11,6 +11,8 @@ class PartnerModel extends PartnerEntity {
     required String status,
     required String serviceClass,
     required String partnerPfpURL,
+    required List<int> ratings,
+    required int completed,
   }) : super(
           partnerId,
           partnerName,
@@ -19,6 +21,8 @@ class PartnerModel extends PartnerEntity {
           status,
           serviceClass,
           partnerPfpURL,
+          ratings,
+          completed,
         );
 
   factory PartnerModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +34,8 @@ class PartnerModel extends PartnerEntity {
       status: json['status'],
       serviceClass: json['serviceClass'],
       partnerPfpURL: json['partnerPfpURL'],
+      ratings: json['ratings'],
+      completed: json['completed'],
     );
   }
 
@@ -42,6 +48,8 @@ class PartnerModel extends PartnerEntity {
       status: (documentSnapshot.data()! as dynamic)['status'],
       serviceClass: (documentSnapshot.data()! as dynamic)['serviceClass'],
       partnerPfpURL: (documentSnapshot.data()! as dynamic)['partnerPfpURL'],
+      ratings: (documentSnapshot.data()! as dynamic)['ratings'],
+      completed: (documentSnapshot.data()! as dynamic)['completed'],
     );
   }
 
@@ -54,6 +62,8 @@ class PartnerModel extends PartnerEntity {
       "status": status,
       "serviceClass": serviceClass,
       "partnerPfpURL": partnerPfpURL,
+      "ratings": ratings,
+      "completed": completed,
     };
   }
 }

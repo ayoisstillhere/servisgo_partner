@@ -8,6 +8,8 @@ class PartnerEntity extends Equatable {
   final String status;
   final String serviceClass;
   final String partnerPfpURL;
+  final List<int> ratings;
+  final int completed;
 
   const PartnerEntity(
     this.partnerId,
@@ -17,6 +19,8 @@ class PartnerEntity extends Equatable {
     this.status,
     this.serviceClass,
     this.partnerPfpURL,
+    this.ratings,
+    this.completed,
   );
 
   @override
@@ -28,5 +32,7 @@ class PartnerEntity extends Equatable {
         status,
         serviceClass,
         partnerPfpURL,
+        ratings,
+        completed,
       ];
 }
