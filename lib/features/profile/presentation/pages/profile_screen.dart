@@ -57,6 +57,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         MediaQuery.of(context).platformBrightness == Brightness.dark
             ? kDarkPrimaryColor
             : kPrimaryColor;
+    final List ratings = widget.currentPartner.ratings;
+    double sum = 0;
+    for (int rating in ratings) {
+      sum += rating;
+    }
+    final double avgRating = sum / ratings.length;
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -204,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     children: [
                       Text(
-                        "4.2",
+                        "$avgRating",
                         style: Theme.of(context)
                             .textTheme
                             .displayLarge!
