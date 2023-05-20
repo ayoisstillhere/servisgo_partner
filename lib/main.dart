@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
+import 'package:servisgo_partner/features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
 import 'features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
 import 'features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
 import 'features/home/presentation/pages/home_screen.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<PartnerCubit>(
           create: (_) => di.sl<PartnerCubit>(),
+        ),
+        BlocProvider<PartnerPfpCubit>(
+          create: (_) => di.sl<PartnerPfpCubit>(),
         ),
       ],
       child: MaterialApp(

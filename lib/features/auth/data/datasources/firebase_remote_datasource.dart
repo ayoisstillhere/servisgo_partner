@@ -31,6 +31,7 @@ abstract class FirebaseRemoteDatasource {
   Future<void> updateStatus(String status);
   Future<void> updateName(String newName);
   Future<void> updatePhone(String newPhone);
+  Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl);
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -196,6 +197,13 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
   Future<void> updatePhone(String newPhone) async {
     await _partnerCollection.doc(_auth.currentUser!.uid).update({
       'partnerPhone': newPhone,
+    });
+  }
+
+  @override
+  Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl) async {
+    await _partnerCollection.doc(_auth.currentUser!.uid).update({
+      'partnerPfpURL': newPartnerPfpUrl,
     });
   }
 }

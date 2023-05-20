@@ -1,9 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:servisgo_partner/features/auth/domain/usecases/update_name_usecase.dart';
+import 'package:servisgo_partner/features/auth/domain/usecases/update_partner_pfp_url_usecase.dart';
 import 'package:servisgo_partner/features/auth/domain/usecases/update_phone_usecase.dart';
 import 'package:servisgo_partner/features/home/domain/usecases/get_partners_usecase.dart';
 import 'package:servisgo_partner/features/home/domain/usecases/update_status_usecase.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
+import 'package:servisgo_partner/features/profile/data/datasources/firebase_storage_remote_datasource.dart';
+import 'package:servisgo_partner/features/profile/domain/repositories/firebase_storage_repository.dart';
+import 'package:servisgo_partner/features/profile/domain/usecases/upload_image_usecase.dart';
+import 'package:servisgo_partner/features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
 
 import 'features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'features/auth/data/repositories/firebase_repository_impl.dart';
@@ -21,6 +26,7 @@ import 'features/auth/domain/usecases/signout_usecase.dart';
 import 'features/auth/domain/usecases/signup_usecase.dart';
 import 'features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
 import 'features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
+import 'features/profile/data/repositories/firebase_storage_repository_impl.dart';
 
 final sl = GetIt.instance;
 
@@ -44,6 +50,10 @@ Future<void> init() async {
         updateStatusUsecase: sl.call(),
         updateNameUsecase: sl.call(),
         updatePhoneUsecase: sl.call(),
+      ));
+  sl.registerFactory<PartnerPfpCubit>(() => PartnerPfpCubit(
+        updatePartnerPfpUrlUsecase: sl.call(),
+        uploadImageUsecase: sl.call(),
       ));
 
   //!useCae
@@ -77,14 +87,23 @@ Future<void> init() async {
       () => UpdateNameUsecase(repository: sl.call()));
   sl.registerLazySingleton<UpdatePhoneUsecase>(
       () => UpdatePhoneUsecase(repository: sl.call()));
+  sl.registerLazySingleton<UploadImageUsecase>(
+      () => UploadImageUsecase(firebaseStorageRepository: sl.call()));
+  sl.registerLazySingleton<UpdatePartnerPfpUrlUsecase>(
+      () => UpdatePartnerPfpUrlUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(
       () => FirebaseRepositoryImpl(firebaseRemoteDatasource: sl.call()));
+  sl.registerLazySingleton<FirebaseStorageRepository>(() =>
+      FirebaseStorageRepositoryImpl(
+          firebaseStorageRemoteDatasource: sl.call()));
 
   //datasource
   sl.registerLazySingleton<FirebaseRemoteDatasource>(
       () => FirebaseRemoteDatasourceImpl());
+  sl.registerLazySingleton<FirebaseStorageRemoteDatasource>(
+      () => FirebaseStorageRemoteDataSourceImpl());
 
   //external
   //e.g final shared Preference = await SharedPreferences.getInstance();

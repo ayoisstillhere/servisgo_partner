@@ -1,10 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
+import 'package:servisgo_partner/features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
@@ -89,25 +95,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               offset: const Offset(8.55, 26.65)),
                         ],
                       ),
-                      child: Center(
-                        child: Image.network(
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          widget.currentPartner.partnerPfpURL,
                         ),
                       ),
                     ),
                     Positioned(
                       top: getProportionateScreenHeight(112),
                       right: 0,
-                      child: Container(
-                        height: getProportionateScreenHeight(48),
-                        width: getProportionateScreenWidth(48),
-                        padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: kCallToAction,
-                        ),
-                        child: SvgPicture.asset(
-                          "assets/icons/Camera.svg",
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                title: const Text(
+                                  "Edit Profile Picture",
+                                  textAlign: TextAlign.center,
+                                ),
+                                children: [
+                                  SimpleDialogOption(
+                                    padding: EdgeInsets.all(
+                                        getProportionateScreenWidth(20)),
+                                    onPressed: () async {
+                                      pickImage(ImageSource.camera, context);
+                                    },
+                                    child: const Text(
+                                      "Take a Photo",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  SimpleDialogOption(
+                                    padding: EdgeInsets.all(
+                                        getProportionateScreenWidth(20)),
+                                    onPressed: () {
+                                      pickImage(ImageSource.gallery, context);
+                                    },
+                                    child: const Text(
+                                      "Choose From Gallery",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  SimpleDialogOption(
+                                    padding: EdgeInsets.all(
+                                        getProportionateScreenWidth(20)),
+                                    child: const Text(
+                                      "Cancel",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        
+                        },
+                        child: Container(
+                          height: getProportionateScreenHeight(48),
+                          width: getProportionateScreenWidth(48),
+                          padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: kCallToAction,
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/Camera.svg",
+                          ),
                         ),
                       ),
                     ),
@@ -302,5 +360,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await BlocProvider.of<PartnerCubit>(context).updatePhone(
       _phoneController.text.trim(),
     );
+  }
+
+   pickImage(ImageSource source, BuildContext context) async {
+    final ImagePicker imagePicker = ImagePicker();
+
+    XFile? file = await imagePicker.pickImage(source: source);
+    Uint8List image = await file!.readAsBytes();
+
+    String pfpUrl = await BlocProvider.of<PartnerPfpCubit>(context).uploadImage(image);
+
+    await BlocProvider.of<PartnerPfpCubit>(context).updatePartnerPfpUrl(pfpUrl);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const HomeScreen()));
   }
 }

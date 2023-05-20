@@ -93,4 +93,8 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   @override
   Future<void> updatePhone(String newPhone) async =>
       await firebaseRemoteDatasource.updatePhone(newPhone);
+
+  @override
+  Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl) async =>
+      await firebaseRemoteDatasource.updatePartnerPfpUrl(newPartnerPfpUrl);
 }
