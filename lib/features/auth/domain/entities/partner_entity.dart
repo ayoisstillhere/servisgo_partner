@@ -8,7 +8,7 @@ class PartnerEntity extends Equatable {
   final String status;
   final String serviceClass;
   final String partnerPfpURL;
-  final List<int> ratings;
+  final List ratings;
   final int completed;
 
   const PartnerEntity(

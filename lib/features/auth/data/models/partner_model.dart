@@ -11,7 +11,7 @@ class PartnerModel extends PartnerEntity {
     required String status,
     required String serviceClass,
     required String partnerPfpURL,
-    required List<int> ratings,
+    required List ratings,
     required int completed,
   }) : super(
           partnerId,
