@@ -42,9 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
         partnerName: "",
         partnerEmail: "",
         partnerPhone: "",
-        status: "",
+        status: "offline",
         serviceClass: "",
         partnerPfpURL: "",
+        ratings: [],
+        completed: 0,
       ),
     );
     if (partner.status == "offline") {

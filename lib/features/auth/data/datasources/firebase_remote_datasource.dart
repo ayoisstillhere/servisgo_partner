@@ -62,6 +62,8 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
           status: status,
           serviceClass: serviceClass,
           partnerPfpURL: partnerPfpURL,
+          ratings: const [],
+          completed: 0,
         ).toDocument();
         _partnerCollection.doc(_auth.currentUser!.uid).set(newUser);
         return;
@@ -115,6 +117,8 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
           status: "offline",
           serviceClass: "",
           partnerPfpURL: _user!.photoUrl!,
+          ratings: const [],
+          completed: 0,
         ).toDocument();
         _partnerCollection.doc(_auth.currentUser!.uid).set(newUser);
         return;
