@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       for (int rating in ratings) {
         sum += rating;
       }
-       avgRating = sum / ratings.length;
+      avgRating = sum / ratings.length;
     } else {
       avgRating = 0;
     }
@@ -188,78 +188,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color(0XFFFA99D3),
-                          shape: BoxShape.circle,
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(6),
-                          vertical: getProportionateScreenHeight(6),
-                        ),
-                        child: Image.asset(
-                          "assets/icons/CleaningIcon.png",
-                          height: getProportionateScreenHeight(20.54),
-                          width: getProportionateScreenWidth(20.54),
-                        ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(8)),
-                      Text(
-                        widget.currentPartner.serviceClass,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "$avgRating",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
-                                          Brightness.dark
-                                      ? kBgColor
-                                      : kBlacks,
-                            ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      Row(
-                        children: [
-                          Text(
-                            "Rating",
-                            style: Theme.of(context).textTheme.bodyLarge,
+                  SizedBox(
+                    width: getProportionateScreenWidth(100),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Color(0XFFFA99D3),
+                            shape: BoxShape.circle,
                           ),
-                          SvgPicture.asset("assets/icons/profileRatingStar.svg")
-                        ],
-                      ),
-                    ],
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(6),
+                            vertical: getProportionateScreenHeight(6),
+                          ),
+                          child: Image.asset(
+                            "assets/icons/CleaningIcon.png",
+                            height: getProportionateScreenHeight(20.54),
+                            width: getProportionateScreenWidth(20.54),
+                          ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(8)),
+                        Text(
+                          widget.currentPartner.serviceClass,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        widget.currentPartner.completed.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(
-                              color:
-                                  MediaQuery.of(context).platformBrightness ==
-                                          Brightness.dark
-                                      ? kBgColor
-                                      : kBlacks,
+                  SizedBox(
+                    width: getProportionateScreenWidth(100),
+                    child: Column(
+                      children: [
+                        Text(
+                          "$avgRating",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                color:
+                                    MediaQuery.of(context).platformBrightness ==
+                                            Brightness.dark
+                                        ? kBgColor
+                                        : kBlacks,
+                              ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(10)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Rating",
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      Text(
-                        "Completed",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
+                            SvgPicture.asset(
+                                "assets/icons/profileRatingStar.svg")
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(100),
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.currentPartner.completed.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                color:
+                                    MediaQuery.of(context).platformBrightness ==
+                                            Brightness.dark
+                                        ? kBgColor
+                                        : kBlacks,
+                              ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(10)),
+                        Text(
+                          "Completed",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
