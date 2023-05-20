@@ -1,4 +1,4 @@
-import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+import '../../domain/entities/partner_entity.dart';
 
 import '../../domain/repositories/firebase_repository.dart';
 import '../datasources/firebase_remote_datasource.dart';

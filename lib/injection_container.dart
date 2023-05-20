@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:servisgo_partner/features/auth/domain/usecases/update_name_usecase.dart';
-import 'package:servisgo_partner/features/auth/domain/usecases/update_partner_pfp_url_usecase.dart';
-import 'package:servisgo_partner/features/auth/domain/usecases/update_phone_usecase.dart';
-import 'package:servisgo_partner/features/home/domain/usecases/get_partners_usecase.dart';
-import 'package:servisgo_partner/features/home/domain/usecases/update_status_usecase.dart';
-import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
-import 'package:servisgo_partner/features/profile/data/datasources/firebase_storage_remote_datasource.dart';
-import 'package:servisgo_partner/features/profile/domain/repositories/firebase_storage_repository.dart';
-import 'package:servisgo_partner/features/profile/domain/usecases/upload_image_usecase.dart';
-import 'package:servisgo_partner/features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
+import 'features/auth/domain/usecases/update_name_usecase.dart';
+import 'features/auth/domain/usecases/update_partner_pfp_url_usecase.dart';
+import 'features/auth/domain/usecases/update_phone_usecase.dart';
+import 'features/home/domain/usecases/get_partners_usecase.dart';
+import 'features/home/domain/usecases/update_status_usecase.dart';
+import 'features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
+import 'features/profile/data/datasources/firebase_storage_remote_datasource.dart';
+import 'features/profile/domain/repositories/firebase_storage_repository.dart';
+import 'features/profile/domain/usecases/upload_image_usecase.dart';
+import 'features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
 
 import 'features/auth/data/datasources/firebase_remote_datasource.dart';
 import 'features/auth/data/repositories/firebase_repository_impl.dart';

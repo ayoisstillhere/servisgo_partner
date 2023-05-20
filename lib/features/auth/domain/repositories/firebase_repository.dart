@@ -1,4 +1,4 @@
-import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+import '../entities/partner_entity.dart';
 
 abstract class FirebaseRepository {
   Future<void> signUp(String email, String password);

@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../../constants.dart';
 import '../../../../size_config.dart';
 
 import '../widgets/message_tile.dart';
 
-class MessagesScreen extends StatefulWidget {
-  const MessagesScreen({super.key});
+class MessagesScreen extends StatelessWidget {
+  MessagesScreen({super.key});
 
-  @override
-  State<MessagesScreen> createState() => _MessagesScreenState();
-}
-
-class _MessagesScreenState extends State<MessagesScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List messageData = [
     [
       "https://cdn.pixabay.com/photo/2021/03/21/13/28/woman-6112091_1280.jpg",
@@ -46,10 +39,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? kDarkPrimaryColor
-            : kPrimaryColor;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -68,15 +57,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // SizedBox(height: getProportionateScreenHeight(58)),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(
-          //       horizontal: getProportionateScreenWidth(32)),
-          //   child: HamburgerMenuButton(
-          //     scaffoldKey: _scaffoldKey,
-          //     primaryColor: primaryColor,
-          //   ),
-          // ),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(

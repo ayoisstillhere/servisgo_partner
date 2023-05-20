@@ -92,7 +92,7 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const TrackerScreen()));
+                          builder: (context) => TrackerScreen(currentPartner: currentPartner,)));
                 },
               ),
               DrawerTile(
@@ -114,7 +114,7 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MessagesScreen()));
+                          builder: (context) => MessagesScreen()));
                 },
               ),
               const Divider(color: kOutlineVariant),

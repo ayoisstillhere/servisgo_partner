@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import '../widgets/no_results_body.dart';
+
+import '../../../auth/domain/entities/partner_entity.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../widgets/no_results_body.dart';
 
 class TrackerScreen extends StatefulWidget {
-  const TrackerScreen({super.key});
+  const TrackerScreen({
+    Key? key,
+    required this.currentPartner,
+  }) : super(key: key);
+  final PartnerEntity currentPartner;
 
   @override
   State<TrackerScreen> createState() => _TrackerScreenState();
@@ -25,7 +31,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
       key: _scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
-        // child: const SideMenu(),
+        child: SideMenu(
+          currentPartner: widget.currentPartner,
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

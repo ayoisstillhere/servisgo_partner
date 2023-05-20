@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
-import 'package:servisgo_partner/features/home/presentation/widgets/offline_home.dart';
+import '../../../auth/data/models/partner_model.dart';
+import '../widgets/offline_home.dart';
 import '../bloc/partner_cubit/partner_cubit.dart';
 import '../widgets/online_home.dart';
 

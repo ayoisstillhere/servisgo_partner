@@ -3,15 +3,14 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/usecases/set_service_class_usecase.dart';
-import '../../../domain/usecases/signout_usecase.dart';
-
 import '../../../domain/usecases/create_current_user_usecase.dart';
 import '../../../domain/usecases/google_signin_usecase.dart';
 import '../../../domain/usecases/google_signup_usecase.dart';
 import '../../../domain/usecases/reset_password_usecase.dart';
 import '../../../domain/usecases/set_phone_usecase.dart';
+import '../../../domain/usecases/set_service_class_usecase.dart';
 import '../../../domain/usecases/signin_usecase.dart';
+import '../../../domain/usecases/signout_usecase.dart';
 import '../../../domain/usecases/signup_usecase.dart';
 
 part 'signin_state.dart';

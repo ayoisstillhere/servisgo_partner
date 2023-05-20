@@ -1,4 +1,4 @@
-import 'package:servisgo_partner/features/auth/domain/repositories/firebase_repository.dart';
+import '../repositories/firebase_repository.dart';
 
 class UpdatePartnerPfpUrlUsecase {
   final FirebaseRepository repository;
