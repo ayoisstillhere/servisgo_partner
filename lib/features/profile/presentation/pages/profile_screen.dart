@@ -18,6 +18,7 @@ import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../widgets/profile_item_tile.dart';
+import '../widgets/service_icon.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -192,21 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: getProportionateScreenWidth(100),
                     child: Column(
                       children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                            color: Color(0XFFFA99D3),
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(6),
-                            vertical: getProportionateScreenHeight(6),
-                          ),
-                          child: Image.asset(
-                            "assets/icons/CleaningIcon.png",
-                            height: getProportionateScreenHeight(20.54),
-                            width: getProportionateScreenWidth(20.54),
-                          ),
-                        ),
+                        ServiceIcon(serviceClass: widget.currentPartner.serviceClass,),
                         SizedBox(height: getProportionateScreenHeight(8)),
                         Text(
                           widget.currentPartner.serviceClass,
