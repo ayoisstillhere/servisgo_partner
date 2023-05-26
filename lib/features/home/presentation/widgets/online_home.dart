@@ -48,8 +48,11 @@ class _OnlineHomeState extends State<OnlineHome> {
 
   Scaffold _scaffoldBody(BuildContext context, JobRequestsLoaded jobRequests) {
     List<JobRequestEntity> availableJobRequests = jobRequests.jobRequests
-        .where((jobRequest) =>
-            jobRequest.serviceClass == widget.partner.serviceClass)
+        .where(
+          (jobRequest) =>
+              jobRequest.serviceClass == widget.partner.serviceClass &&
+              jobRequest.jobRequestStatus == "Pending",
+        )
         .toList();
     final primaryColor =
         MediaQuery.of(context).platformBrightness == Brightness.dark
