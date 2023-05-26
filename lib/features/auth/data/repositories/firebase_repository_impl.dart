@@ -1,3 +1,6 @@
+import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
+import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
+
 import '../../domain/entities/partner_entity.dart';
 
 import '../../domain/repositories/firebase_repository.dart';
@@ -97,4 +100,14 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   @override
   Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl) async =>
       await firebaseRemoteDatasource.updatePartnerPfpUrl(newPartnerPfpUrl);
+
+  @override
+  Stream<List<JobRequestEntity>> getJobRequests() {
+    return firebaseRemoteDatasource.getJobRequests();
+  }
+
+  @override
+  Stream<List<UserEntity>> getUsers() {
+    return firebaseRemoteDatasource.getUsers();
+  }
 }

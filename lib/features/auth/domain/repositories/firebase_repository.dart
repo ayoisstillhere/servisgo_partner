@@ -1,3 +1,6 @@
+import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
+
+import '../../../home/domain/entities/user_entity.dart';
 import '../entities/partner_entity.dart';
 
 abstract class FirebaseRepository {
@@ -24,4 +27,6 @@ abstract class FirebaseRepository {
   Future<void> updateName(String newName);
   Future<void> updatePhone(String newPhone);
   Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl);
+  Stream<List<JobRequestEntity>> getJobRequests();
+  Stream<List<UserEntity>> getUsers();
 }

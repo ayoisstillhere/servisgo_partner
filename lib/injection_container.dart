@@ -1,4 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:servisgo_partner/features/home/domain/usecases/get_job_requests.dart';
+import 'package:servisgo_partner/features/home/domain/usecases/get_users_usecase.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
 import 'features/auth/domain/usecases/update_name_usecase.dart';
 import 'features/auth/domain/usecases/update_partner_pfp_url_usecase.dart';
 import 'features/auth/domain/usecases/update_phone_usecase.dart';
@@ -55,6 +59,9 @@ Future<void> init() async {
         updatePartnerPfpUrlUsecase: sl.call(),
         uploadImageUsecase: sl.call(),
       ));
+  sl.registerFactory<JobRequestsCubit>(
+      () => JobRequestsCubit(getJobRequestsUsecase: sl.call()));
+  sl.registerFactory<UserCubit>(() => UserCubit(getUsersUsecase: sl.call()));
 
   //!useCae
   sl.registerLazySingleton<IsSigninUsecase>(
@@ -91,6 +98,10 @@ Future<void> init() async {
       () => UploadImageUsecase(firebaseStorageRepository: sl.call()));
   sl.registerLazySingleton<UpdatePartnerPfpUrlUsecase>(
       () => UpdatePartnerPfpUrlUsecase(repository: sl.call()));
+  sl.registerLazySingleton<GetJobRequestsUsecase>(
+      () => GetJobRequestsUsecase(repository: sl.call()));
+  sl.registerLazySingleton<GetUsersUsecase>(
+      () => GetUsersUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

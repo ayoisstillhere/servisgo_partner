@@ -5,7 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
+import 'package:servisgo_partner/features/home/data/models/job_request_model.dart';
 
+import '../../../home/data/models/user_model.dart';
+import '../../../home/domain/entities/job_request_entity.dart';
+import '../../../home/domain/entities/user_entity.dart';
 import '../../domain/entities/partner_entity.dart';
 
 abstract class FirebaseRemoteDatasource {
@@ -32,11 +36,16 @@ abstract class FirebaseRemoteDatasource {
   Future<void> updateName(String newName);
   Future<void> updatePhone(String newPhone);
   Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl);
+  Stream<List<JobRequestEntity>> getJobRequests();
+  Stream<List<UserEntity>> getUsers();
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _partnerCollection = FirebaseFirestore.instance.collection('partners');
+  final _jobRequestCollection =
+      FirebaseFirestore.instance.collection('jobRequests');
+  final _userCollection = FirebaseFirestore.instance.collection("users");
   final googleSignin = GoogleSignIn(scopes: ['email']);
 
   GoogleSignInAccount? _user;
@@ -209,5 +218,20 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
     await _partnerCollection.doc(_auth.currentUser!.uid).update({
       'partnerPfpURL': newPartnerPfpUrl,
     });
+  }
+
+  @override
+  Stream<List<JobRequestEntity>> getJobRequests() {
+    return _jobRequestCollection.snapshots().map((querySnapshot) =>
+        querySnapshot.docs
+            .map((docSnapshot) => JobRequestModel.fromSnapshot(docSnapshot))
+            .toList());
+  }
+
+  @override
+  Stream<List<UserEntity>> getUsers() {
+    return _userCollection.snapshots().map((querySnapshot) => querySnapshot.docs
+        .map((docSnapshot) => UserModel.fromSnapshot(docSnapshot))
+        .toList());
   }
 }

@@ -26,7 +26,7 @@ class JobRequestCard extends StatelessWidget {
   final String time;
   final int eta;
   final String service;
-  final double price;
+  final String price;
   final String address;
   final String city;
 
@@ -52,7 +52,7 @@ class JobRequestCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: getProportionateScreenWidth(32),
-                child: Image.network(pfpURL),
+                backgroundImage: NetworkImage(pfpURL),
               ),
               SizedBox(width: getProportionateScreenWidth(8)),
               Expanded(

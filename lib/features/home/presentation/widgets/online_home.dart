@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
+import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
@@ -7,7 +12,7 @@ import '../../../../size_config.dart';
 import '../../../auth/domain/entities/partner_entity.dart';
 import 'job_request_card.dart';
 
-class OnlineHome extends StatelessWidget {
+class OnlineHome extends StatefulWidget {
   const OnlineHome({
     super.key,
     required GlobalKey<ScaffoldState> scaffoldKey,
@@ -18,17 +23,45 @@ class OnlineHome extends StatelessWidget {
   final PartnerEntity partner;
 
   @override
+  State<OnlineHome> createState() => _OnlineHomeState();
+}
+
+class _OnlineHomeState extends State<OnlineHome> {
+  @override
+  void initState() {
+    BlocProvider.of<JobRequestsCubit>(context).getJobRequests();
+    BlocProvider.of<UserCubit>(context).getUsers();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return BlocBuilder<JobRequestsCubit, JobRequestsState>(
+      builder: (_, state) {
+        if (state is JobRequestsLoaded) {
+          return _scaffoldBody(context, state);
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  Scaffold _scaffoldBody(BuildContext context, JobRequestsLoaded jobRequests) {
+    List<JobRequestEntity> availableJobRequests = jobRequests.jobRequests
+        .where((jobRequest) =>
+            jobRequest.serviceClass == widget.partner.serviceClass)
+        .toList();
     final primaryColor =
         MediaQuery.of(context).platformBrightness == Brightness.dark
             ? kDarkPrimaryColor
             : kPrimaryColor;
+
     return Scaffold(
-      key: _scaffoldKey,
+      key: widget._scaffoldKey,
       drawer: Drawer(
           width: getProportionateScreenWidth(260),
           child: SideMenu(
-            currentPartner: partner,
+            currentPartner: widget.partner,
           )),
       // body: OfflineHome(scaffoldKey: _scaffoldKey, primaryColor: primaryColor),
       body: Padding(
@@ -51,48 +84,15 @@ class OnlineHome extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: getProportionateScreenHeight(20)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ayodele Fagbami",
-                      date: "Sep 15",
-                      time: "14:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 2000,
-                      address: "14C Ola Crescent, High Gardens Estate, Ikota",
-                      city: "Lekki",
+                    BlocBuilder<UserCubit, UserState>(
+                      builder: (_, state) {
+                        if (state is UserLoaded) {
+                          return _jobRequestListView(
+                              availableJobRequests, state);
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
                     ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ugochi Nkem",
-                      date: "Sep 13",
-                      time: "11:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 1000,
-                      address: "8B Ododo Rd, Surulere",
-                      city: "Surulere",
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
-                    JobRequestCard(
-                      primaryColor: primaryColor,
-                      pfpURL:
-                          "https://firebasestorage.googleapis.com/v0/b/servisgo-fyp.appspot.com/o/Default_PFP.png?alt=media&token=c6cec350-3a9b-4c85-a219-a9d5a8a1a3db",
-                      name: "Ugochi Nkem",
-                      date: "Sep 13",
-                      time: "11:00",
-                      eta: 15,
-                      service: "Cleaning",
-                      price: 1000,
-                      address: "8B Ododo Rd, Surulere",
-                      city: "Surulere",
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(60)),
                   ],
                 ),
               ),
@@ -100,13 +100,43 @@ class OnlineHome extends StatelessWidget {
             Positioned(
               top: 58,
               child: HamburgerMenuButton(
-                scaffoldKey: _scaffoldKey,
+                scaffoldKey: widget._scaffoldKey,
                 primaryColor: primaryColor,
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _jobRequestListView(
+      List<JobRequestEntity> availableJobRequests, UserLoaded users) {
+    final primaryColor =
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? kDarkPrimaryColor
+            : kPrimaryColor;
+    return Column(
+      children: List.generate(availableJobRequests.length, (index) {
+        UserEntity user = users.users.firstWhere(
+          (user) => user.uid == availableJobRequests[index].customerId,
+        );
+        return Padding(
+          padding: EdgeInsets.only(bottom: getProportionateScreenHeight(48)),
+          child: JobRequestCard(
+            primaryColor: primaryColor,
+            pfpURL: user.pfpURL,
+            name: user.name,
+            date: availableJobRequests[index].scheduledDate,
+            time: availableJobRequests[index].scheduledTime,
+            eta: 10,
+            service: availableJobRequests[index].serviceClass,
+            price: availableJobRequests[index].price,
+            address: availableJobRequests[index].address,
+            city: availableJobRequests[index].city,
+          ),
+        );
+      }),
     );
   }
 }
