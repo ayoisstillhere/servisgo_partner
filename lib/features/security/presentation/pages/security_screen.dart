@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/security_tile.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../widgets/security_tile.dart';
 
 class SecurityScreen extends StatelessWidget {
   const SecurityScreen({super.key});

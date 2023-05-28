@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servisgo_partner/features/tracker/data/models/accepted_service_model.dart';
-import 'package:servisgo_partner/features/tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
+import '../../data/models/accepted_service_model.dart';
+import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
 
 import '../../../auth/domain/entities/partner_entity.dart';
 
@@ -9,7 +9,6 @@ import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
-import '../widgets/no_results_body.dart';
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({

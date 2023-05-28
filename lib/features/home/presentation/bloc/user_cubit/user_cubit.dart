@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:servisgo_partner/features/home/domain/usecases/get_users_usecase.dart';
+import '../../../domain/usecases/get_users_usecase.dart';
 
 import '../../../domain/entities/user_entity.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
-import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
-import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
-import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
-import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
-import 'package:servisgo_partner/features/tracker/presentation/pages/tracker_screen.dart';
+import '../../domain/entities/job_request_entity.dart';
+import '../../domain/entities/user_entity.dart';
+import '../bloc/job_requests_cubit/job_requests_cubit.dart';
+import '../bloc/user_cubit/user_cubit.dart';
+import '../../../tracker/presentation/pages/tracker_screen.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';

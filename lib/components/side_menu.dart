@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
 import 'package:servisgo_partner/features/chat/presentation/pages/messages_screen.dart';
 import 'package:servisgo_partner/features/history/presentation/pages/history_screen.dart';
