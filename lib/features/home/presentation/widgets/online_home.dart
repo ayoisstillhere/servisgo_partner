@@ -139,7 +139,7 @@ class _OnlineHomeState extends State<OnlineHome> {
                   ),
                 ),
                 Positioned(
-                  top: 58,
+                  top: getProportionateScreenHeight(58),
                   child: HamburgerMenuButton(
                     scaffoldKey: widget._scaffoldKey,
                     primaryColor: primaryColor,
