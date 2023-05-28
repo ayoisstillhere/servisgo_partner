@@ -32,42 +32,6 @@ class _TrackerScreenState extends State<TrackerScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    return BlocBuilder<AcceptedServiceCubit, AcceptedServiceState>(
-      builder: (_, state) {
-        if (state is AcceptedServiceLoaded) {
-          return _scaffoldBody(scaffoldKey, state);
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
-  }
-
-  Scaffold _scaffoldBody(GlobalKey<ScaffoldState> scaffoldKey,
-      AcceptedServiceLoaded acceptedServices) {
-    final currentService = acceptedServices.acceptedRequests.firstWhere(
-        (acceptedRequest) =>
-            acceptedRequest.partnerId == widget.currentPartner.partnerId,
-        orElse: () =>  const AcceptedServiceModel(
-              id: "",
-              customerId: "",
-              partnerId: "",
-              serviceClass: "",
-              serviceStatus: "",
-              scheduledDate: "",
-              scheduledTime: "",
-              servicePrice: "",
-              serviceRating: 0,
-              additionalDetails: "",
-              customerAddress: "",
-              latitudeCustomer: 0,
-              longitudeCustomer: 0,
-              latitudePartner: 0,
-              longitudePartner: 0,
-            ));
-    final primaryColor =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? kDarkPrimaryColor
-            : kPrimaryColor;
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(
@@ -76,20 +40,51 @@ class _TrackerScreenState extends State<TrackerScreen> {
           currentPartner: widget.currentPartner,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: getProportionateScreenHeight(58)),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(32)),
-            child: HamburgerMenuButton(
-              scaffoldKey: scaffoldKey,
-              primaryColor: primaryColor,
-            ),
-          ),
-          const NoResultsBody(),
-        ],
+      body: BlocBuilder<AcceptedServiceCubit, AcceptedServiceState>(
+        builder: (_, state) {
+          if (state is AcceptedServiceLoaded) {
+            final currentService = state.acceptedRequests.firstWhere(
+                (acceptedRequest) =>
+                    acceptedRequest.partnerId ==
+                        widget.currentPartner.partnerId &&
+                    acceptedRequest.serviceStatus == "Pending",
+                orElse: () => const AcceptedServiceModel(
+                      id: "",
+                      customerId: "",
+                      partnerId: "",
+                      serviceClass: "",
+                      serviceStatus: "",
+                      scheduledDate: "",
+                      scheduledTime: "",
+                      servicePrice: "",
+                      serviceRating: 0,
+                      additionalDetails: "",
+                      customerAddress: "",
+                      latitudeCustomer: 0,
+                      longitudeCustomer: 0,
+                      latitudePartner: 0,
+                      longitudePartner: 0,
+                    ));
+            final primaryColor =
+                MediaQuery.of(context).platformBrightness == Brightness.dark
+                    ? kDarkPrimaryColor
+                    : kPrimaryColor;
+            return Stack(
+              children: [
+                Positioned(
+                  top: 58,
+                  left: 32,
+                  child: HamburgerMenuButton(
+                    scaffoldKey: scaffoldKey,
+                    primaryColor: primaryColor,
+                  ),
+                ),
+                // const NoResultsBody(),
+              ],
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
