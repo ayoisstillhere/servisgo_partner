@@ -6,11 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 import 'package:servisgo_partner/features/home/data/models/job_request_model.dart';
+import 'package:servisgo_partner/features/tracker/data/models/accepted_service_model.dart';
 
 import '../../../home/data/models/user_model.dart';
 import '../../../home/domain/entities/job_request_entity.dart';
 import '../../../home/domain/entities/user_entity.dart';
 import '../../domain/entities/partner_entity.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class FirebaseRemoteDatasource {
   Future<void> signUp(String email, String password);
@@ -38,6 +40,22 @@ abstract class FirebaseRemoteDatasource {
   Future<void> updatePartnerPfpUrl(String newPartnerPfpUrl);
   Stream<List<JobRequestEntity>> getJobRequests();
   Stream<List<UserEntity>> getUsers();
+  Future<void> acceptJobRequest(
+    String customerId,
+    String serviceClass,
+    String serviceStatus,
+    String scheduledDate,
+    String scheduledTime,
+    String servicePrice,
+    double serviceRating,
+    String additionalDetails,
+    String customerAddress,
+    double? latitudeCustomer,
+    double? longitudeCustomer,
+    double? latitudePartner,
+    double? longitudePartner,
+    String jobRequestId,
+  );
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -46,6 +64,8 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
   final _jobRequestCollection =
       FirebaseFirestore.instance.collection('jobRequests');
   final _userCollection = FirebaseFirestore.instance.collection("users");
+  final _acceptedServiceCollection =
+      FirebaseFirestore.instance.collection("acceptedServices");
   final googleSignin = GoogleSignIn(scopes: ['email']);
 
   GoogleSignInAccount? _user;
@@ -233,5 +253,52 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
     return _userCollection.snapshots().map((querySnapshot) => querySnapshot.docs
         .map((docSnapshot) => UserModel.fromSnapshot(docSnapshot))
         .toList());
+  }
+
+  @override
+  Future<void> acceptJobRequest(
+    String customerId,
+    String serviceClass,
+    String serviceStatus,
+    String scheduledDate,
+    String scheduledTime,
+    String servicePrice,
+    double serviceRating,
+    String additionalDetails,
+    String customerAddress,
+    double? latitudeCustomer,
+    double? longitudeCustomer,
+    double? latitudePartner,
+    double? longitudePartner,
+    String jobRequestId,
+  ) async {
+    var uuid = const Uuid();
+    final String id = uuid.v4();
+
+    final newAcceptedService = AcceptedServiceModel(
+      id: id,
+      customerId: customerId,
+      partnerId: _auth.currentUser!.uid,
+      serviceClass: serviceClass,
+      serviceStatus: serviceStatus,
+      scheduledDate: scheduledDate,
+      scheduledTime: scheduledTime,
+      servicePrice: servicePrice,
+      serviceRating: serviceRating,
+      additionalDetails: additionalDetails,
+      customerAddress: customerAddress,
+      latitudeCustomer: latitudeCustomer,
+      longitudeCustomer: longitudeCustomer,
+      latitudePartner: latitudePartner,
+      longitudePartner: longitudePartner,
+    );
+
+    await _acceptedServiceCollection
+        .doc(id)
+        .set(newAcceptedService.toDocument());
+
+    await _jobRequestCollection
+        .doc(jobRequestId)
+        .update({'jobRequestStatus': 'Accepted'});
   }
 }

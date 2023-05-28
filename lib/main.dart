@@ -7,6 +7,7 @@ import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cu
 import 'package:servisgo_partner/features/home/presentation/bloc/partner_cubit/partner_cubit.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
 import 'package:servisgo_partner/features/profile/presentation/bloc/partner_pfp_cubit/partner_pfp_cubit.dart';
+import 'package:servisgo_partner/features/tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
 
 import 'features/auth/presentation/bloc/auth_cubit/auth_cubit.dart';
 import 'features/auth/presentation/bloc/signin_cubit/signin_cubit.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UserCubit>(
           create: (_) => di.sl<UserCubit>(),
+        ),
+        BlocProvider<AcceptedServiceCubit>(
+          create: (_) => di.sl<AcceptedServiceCubit>(),
         ),
       ],
       child: MaterialApp(

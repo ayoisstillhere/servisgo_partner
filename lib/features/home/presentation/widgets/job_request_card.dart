@@ -17,6 +17,7 @@ class JobRequestCard extends StatelessWidget {
     required this.price,
     required this.address,
     required this.city,
+    required this.acceptRequest,
   }) : super(key: key);
 
   final Color primaryColor;
@@ -29,6 +30,7 @@ class JobRequestCard extends StatelessWidget {
   final String price;
   final String address;
   final String city;
+  final void Function() acceptRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +221,7 @@ class JobRequestCard extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: acceptRequest,
                 child: Container(
                   width: getProportionateScreenWidth(136),
                   decoration: BoxDecoration(

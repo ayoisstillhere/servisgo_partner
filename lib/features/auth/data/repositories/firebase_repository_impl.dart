@@ -110,4 +110,37 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Stream<List<UserEntity>> getUsers() {
     return firebaseRemoteDatasource.getUsers();
   }
+
+  @override
+  Future<void> acceptJobRequest(
+    String customerId,
+    String serviceClass,
+    String serviceStatus,
+    String scheduledDate,
+    String scheduledTime,
+    String servicePrice,
+    double serviceRating,
+    String additionalDetails,
+    String customerAddress,
+    double? latitudeCustomer,
+    double? longitudeCustomer,
+    double? latitudePartner,
+    double? longitudePartner,
+    String jobRequestId,
+  ) async =>
+      await firebaseRemoteDatasource.acceptJobRequest(
+          customerId,
+          serviceClass,
+          serviceStatus,
+          scheduledDate,
+          scheduledTime,
+          servicePrice,
+          serviceRating,
+          additionalDetails,
+          customerAddress,
+          latitudeCustomer,
+          longitudeCustomer,
+          latitudePartner,
+          longitudePartner,
+          jobRequestId);
 }

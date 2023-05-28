@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
 import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
+import 'package:servisgo_partner/features/tracker/presentation/pages/tracker_screen.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../../../auth/domain/entities/partner_entity.dart';
+import '../../../tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
 import 'job_request_card.dart';
 
 class OnlineHome extends StatefulWidget {
@@ -27,11 +30,31 @@ class OnlineHome extends StatefulWidget {
 }
 
 class _OnlineHomeState extends State<OnlineHome> {
+  LocationData? currentLocation;
   @override
   void initState() {
     BlocProvider.of<JobRequestsCubit>(context).getJobRequests();
     BlocProvider.of<UserCubit>(context).getUsers();
     super.initState();
+    getCurrentLocation();
+  }
+
+  void getCurrentLocation() async {
+    Location location = Location();
+
+    location.getLocation().then(
+      (location) {
+        currentLocation = location;
+      },
+    );
+
+    location.onLocationChanged.listen((newLoc) {
+      currentLocation = newLoc;
+
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -67,48 +90,65 @@ class _OnlineHomeState extends State<OnlineHome> {
             currentPartner: widget.partner,
           )),
       // body: OfflineHome(scaffoldKey: _scaffoldKey, primaryColor: primaryColor),
-      body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(32)),
-        child: Stack(
-          children: [
-            Positioned(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: getProportionateScreenHeight(114)),
-                    Center(
-                      child: Text(
-                        "JOB REQUESTS",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: primaryColor),
-                      ),
+      body: BlocConsumer<AcceptedServiceCubit, AcceptedServiceState>(
+        listener: (context, state) {
+          if (state is AcceptedServiceSuccess) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) =>
+                        TrackerScreen(currentPartner: widget.partner)));
+          }
+        },
+        builder: (context, state) {
+          if (state is AcceptedServiceLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(32)),
+            child: Stack(
+              children: [
+                Positioned(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: getProportionateScreenHeight(114)),
+                        Center(
+                          child: Text(
+                            "JOB REQUESTS",
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(color: primaryColor),
+                          ),
+                        ),
+                        SizedBox(height: getProportionateScreenHeight(20)),
+                        BlocBuilder<UserCubit, UserState>(
+                          builder: (_, state) {
+                            if (state is UserLoaded) {
+                              return _jobRequestListView(
+                                  availableJobRequests, state);
+                            }
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          },
+                        ),
+                      ],
                     ),
-                    SizedBox(height: getProportionateScreenHeight(20)),
-                    BlocBuilder<UserCubit, UserState>(
-                      builder: (_, state) {
-                        if (state is UserLoaded) {
-                          return _jobRequestListView(
-                              availableJobRequests, state);
-                        }
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 58,
+                  child: HamburgerMenuButton(
+                    scaffoldKey: widget._scaffoldKey,
+                    primaryColor: primaryColor,
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 58,
-              child: HamburgerMenuButton(
-                scaffoldKey: widget._scaffoldKey,
-                primaryColor: primaryColor,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -137,6 +177,26 @@ class _OnlineHomeState extends State<OnlineHome> {
             price: availableJobRequests[index].price,
             address: availableJobRequests[index].address,
             city: availableJobRequests[index].city,
+            acceptRequest: () async {
+              await BlocProvider.of<AcceptedServiceCubit>(context)
+                  .acceptJobRequest(
+                customerId: user.uid,
+                serviceClass: availableJobRequests[index].serviceClass,
+                serviceStatus: "Pending",
+                scheduledDate: availableJobRequests[index].scheduledDate,
+                scheduledTime: availableJobRequests[index].scheduledTime,
+                servicePrice: availableJobRequests[index].price,
+                serviceRating: 0.0,
+                additionalDetails:
+                    availableJobRequests[index].additionalDetails,
+                customerAddress: availableJobRequests[index].address,
+                latitudeCustomer: availableJobRequests[index].latitude,
+                longitudeCustomer: availableJobRequests[index].longitude,
+                latitudePartner: currentLocation!.latitude,
+                longitudePartner: currentLocation!.longitude,
+                jobRequestId: availableJobRequests[index].id,
+              );
+            },
           ),
         );
       }),

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class ActiveServiceEntity extends Equatable {
+class AcceptedServiceEntity extends Equatable {
   final String id;
   final String customerId;
   final String partnerId;
@@ -9,7 +9,7 @@ class ActiveServiceEntity extends Equatable {
   final String scheduledDate;
   final String scheduledTime;
   final String servicePrice;
-  final String serviceRating;
+  final double serviceRating;
   final String additionalDetails;
   final String customerAddress;
   final double? latitudeCustomer;
@@ -17,7 +17,7 @@ class ActiveServiceEntity extends Equatable {
   final double? latitudePartner;
   final double? longitudePartner;
 
-  const ActiveServiceEntity(
+  const AcceptedServiceEntity(
     this.id,
     this.customerId,
     this.partnerId,

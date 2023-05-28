@@ -3,6 +3,8 @@ import 'package:servisgo_partner/features/home/domain/usecases/get_job_requests.
 import 'package:servisgo_partner/features/home/domain/usecases/get_users_usecase.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
+import 'package:servisgo_partner/features/tracker/domain/usecases/accept_job_request_usecase.dart';
+import 'package:servisgo_partner/features/tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
 import 'features/auth/domain/usecases/update_name_usecase.dart';
 import 'features/auth/domain/usecases/update_partner_pfp_url_usecase.dart';
 import 'features/auth/domain/usecases/update_phone_usecase.dart';
@@ -62,6 +64,8 @@ Future<void> init() async {
   sl.registerFactory<JobRequestsCubit>(
       () => JobRequestsCubit(getJobRequestsUsecase: sl.call()));
   sl.registerFactory<UserCubit>(() => UserCubit(getUsersUsecase: sl.call()));
+  sl.registerFactory<AcceptedServiceCubit>(
+      () => AcceptedServiceCubit(acceptJobRequestUsecase: sl.call()));
 
   //!useCae
   sl.registerLazySingleton<IsSigninUsecase>(
@@ -102,6 +106,8 @@ Future<void> init() async {
       () => GetJobRequestsUsecase(repository: sl.call()));
   sl.registerLazySingleton<GetUsersUsecase>(
       () => GetUsersUsecase(repository: sl.call()));
+  sl.registerLazySingleton<AcceptJobRequestUsecase>(
+      () => AcceptJobRequestUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:servisgo_partner/features/tracker/domain/entities/active_service_entity.dart';
+import 'package:servisgo_partner/features/tracker/domain/entities/accepted_service_entity.dart';
 
-class ActiveServiceModel extends ActiveServiceEntity {
-  const ActiveServiceModel({
+class AcceptedServiceModel extends AcceptedServiceEntity {
+  const AcceptedServiceModel({
     required String id,
     required String customerId,
     required String partnerId,
@@ -11,7 +11,7 @@ class ActiveServiceModel extends ActiveServiceEntity {
     required String scheduledDate,
     required String scheduledTime,
     required String servicePrice,
-    required String serviceRating,
+    required double serviceRating,
     required String additionalDetails,
     required String customerAddress,
     required double? latitudeCustomer,
@@ -36,8 +36,8 @@ class ActiveServiceModel extends ActiveServiceEntity {
           longitudePartner,
         );
 
-  factory ActiveServiceModel.fromJson(Map<String, dynamic> json) {
-    return ActiveServiceModel(
+  factory AcceptedServiceModel.fromJson(Map<String, dynamic> json) {
+    return AcceptedServiceModel(
       id: json['id'],
       customerId: json['customerId'],
       partnerId: json['partnerId'],
@@ -56,8 +56,8 @@ class ActiveServiceModel extends ActiveServiceEntity {
     );
   }
 
-  factory ActiveServiceModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
-    return ActiveServiceModel(
+  factory AcceptedServiceModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
+    return AcceptedServiceModel(
       id: (documentSnapshot.data()! as dynamic)['id'],
       customerId: (documentSnapshot.data()! as dynamic)['customerId'],
       partnerId: (documentSnapshot.data()! as dynamic)['partnerId'],
