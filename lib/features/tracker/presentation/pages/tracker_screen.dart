@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/tracker/data/models/accepted_service_model.dart';
 import 'package:servisgo_partner/features/tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
 
 import '../../../auth/domain/entities/partner_entity.dart';
@@ -31,6 +32,38 @@ class _TrackerScreenState extends State<TrackerScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    return BlocBuilder<AcceptedServiceCubit, AcceptedServiceState>(
+      builder: (_, state) {
+        if (state is AcceptedServiceLoaded) {
+          return _scaffoldBody(scaffoldKey, state);
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  Scaffold _scaffoldBody(GlobalKey<ScaffoldState> scaffoldKey,
+      AcceptedServiceLoaded acceptedServices) {
+    final currentService = acceptedServices.acceptedRequests.firstWhere(
+        (acceptedRequest) =>
+            acceptedRequest.partnerId == widget.currentPartner.partnerId,
+        orElse: () =>  const AcceptedServiceModel(
+              id: "",
+              customerId: "",
+              partnerId: "",
+              serviceClass: "",
+              serviceStatus: "",
+              scheduledDate: "",
+              scheduledTime: "",
+              servicePrice: "",
+              serviceRating: 0,
+              additionalDetails: "",
+              customerAddress: "",
+              latitudeCustomer: 0,
+              longitudeCustomer: 0,
+              latitudePartner: 0,
+              longitudePartner: 0,
+            ));
     final primaryColor =
         MediaQuery.of(context).platformBrightness == Brightness.dark
             ? kDarkPrimaryColor
