@@ -26,3 +26,12 @@ class AcceptedServiceSuccess extends AcceptedServiceState {
   @override
   List<Object?> get props => [];
 }
+
+class AcceptedServiceLoaded extends AcceptedServiceState {
+  final List<AcceptedServiceEntity> acceptedRequests;
+  const AcceptedServiceLoaded({
+    required this.acceptedRequests,
+  });
+  @override
+  List<Object?> get props => [acceptedRequests];
+}

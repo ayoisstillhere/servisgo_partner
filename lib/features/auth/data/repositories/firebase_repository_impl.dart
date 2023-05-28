@@ -1,5 +1,6 @@
 import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
 import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
+import 'package:servisgo_partner/features/tracker/domain/entities/accepted_service_entity.dart';
 
 import '../../domain/entities/partner_entity.dart';
 
@@ -143,4 +144,9 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
           latitudePartner,
           longitudePartner,
           jobRequestId);
+
+  @override
+  Stream<List<AcceptedServiceEntity>> getAcceptedServices() {
+    return firebaseRemoteDatasource.getAcceptedServices();
+  }
 }

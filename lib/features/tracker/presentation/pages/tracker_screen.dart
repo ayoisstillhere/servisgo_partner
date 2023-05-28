@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servisgo_partner/features/tracker/presentation/bloc/accepted_service_cubit/accepted_service_cubit.dart';
 
 import '../../../auth/domain/entities/partner_entity.dart';
 
@@ -21,14 +23,20 @@ class TrackerScreen extends StatefulWidget {
 
 class _TrackerScreenState extends State<TrackerScreen> {
   @override
+  void initState() {
+    BlocProvider.of<AcceptedServiceCubit>(context).getAcceptedRequests();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final primaryColor =
         MediaQuery.of(context).platformBrightness == Brightness.dark
             ? kDarkPrimaryColor
             : kPrimaryColor;
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       drawer: Drawer(
         width: getProportionateScreenWidth(260),
         child: SideMenu(
@@ -43,7 +51,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(32)),
             child: HamburgerMenuButton(
-              scaffoldKey: _scaffoldKey,
+              scaffoldKey: scaffoldKey,
               primaryColor: primaryColor,
             ),
           ),

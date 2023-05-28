@@ -1,6 +1,7 @@
 import 'package:servisgo_partner/features/home/domain/entities/job_request_entity.dart';
 
 import '../../../home/domain/entities/user_entity.dart';
+import '../../../tracker/domain/entities/accepted_service_entity.dart';
 import '../entities/partner_entity.dart';
 
 abstract class FirebaseRepository {
@@ -45,4 +46,5 @@ abstract class FirebaseRepository {
     double? longitudePartner,
     String jobRequestId,
   );
+  Stream<List<AcceptedServiceEntity>> getAcceptedServices();
 }

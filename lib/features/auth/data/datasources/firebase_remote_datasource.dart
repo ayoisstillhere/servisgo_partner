@@ -11,6 +11,7 @@ import 'package:servisgo_partner/features/tracker/data/models/accepted_service_m
 import '../../../home/data/models/user_model.dart';
 import '../../../home/domain/entities/job_request_entity.dart';
 import '../../../home/domain/entities/user_entity.dart';
+import '../../../tracker/domain/entities/accepted_service_entity.dart';
 import '../../domain/entities/partner_entity.dart';
 import 'package:uuid/uuid.dart';
 
@@ -56,6 +57,7 @@ abstract class FirebaseRemoteDatasource {
     double? longitudePartner,
     String jobRequestId,
   );
+  Stream<List<AcceptedServiceEntity>> getAcceptedServices();
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -300,5 +302,14 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
     await _jobRequestCollection
         .doc(jobRequestId)
         .update({'jobRequestStatus': 'Accepted'});
+  }
+
+  @override
+  Stream<List<AcceptedServiceEntity>> getAcceptedServices() {
+    return _acceptedServiceCollection.snapshots().map((querySnapshot) =>
+        querySnapshot.docs
+            .map(
+                (docSnapshot) => AcceptedServiceModel.fromSnapshot(docSnapshot))
+            .toList());
   }
 }

@@ -5,12 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:servisgo_partner/features/tracker/domain/usecases/accept_job_request_usecase.dart';
 
+import '../../../domain/entities/accepted_service_entity.dart';
+import '../../../domain/usecases/get_accepted_requests_usecase.dart';
+
 part 'accepted_service_state.dart';
 
 class AcceptedServiceCubit extends Cubit<AcceptedServiceState> {
   final AcceptJobRequestUsecase acceptJobRequestUsecase;
+  final GetAcceptedRequestsUsecase getAcceptedRequestsUsecase;
   AcceptedServiceCubit({
     required this.acceptJobRequestUsecase,
+    required this.getAcceptedRequestsUsecase,
   }) : super(AcceptedServiceInitial());
 
   Future<void> acceptJobRequest({
@@ -53,5 +58,14 @@ class AcceptedServiceCubit extends Cubit<AcceptedServiceState> {
     } catch (_) {
       emit(const AcceptedServiceFailure("Unable to Accept Job Request"));
     }
+  }
+
+  Future<void> getAcceptedRequests() async {
+    try {
+      final acceptedRequest = getAcceptedRequestsUsecase.call();
+      acceptedRequest.listen((acceptedRequests) {
+        emit(AcceptedServiceLoaded(acceptedRequests: acceptedRequests));
+      });
+    } on SocketException catch (_) {}
   }
 }
