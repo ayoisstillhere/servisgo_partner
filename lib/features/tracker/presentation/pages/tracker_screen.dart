@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../data/models/accepted_service_model.dart';
-import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
 
-import '../../../auth/domain/entities/partner_entity.dart';
+import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../../../auth/domain/entities/partner_entity.dart';
+import '../../data/models/accepted_service_model.dart';
+import '../../domain/entities/accepted_service_entity.dart';
+import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
+import '../widgets/tracker_info_card.dart';
 
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({
@@ -81,11 +84,15 @@ class _TrackerScreenState extends State<TrackerScreen> {
               currentService.longitudePartner!,
             );
             return TrackerMap(
-                partnerLocation: partnerLocation,
-                polylineCoordinates: polylineCoordinates,
-                customerLocation: customerLocation,
-                scaffoldKey: scaffoldKey,
-                primaryColor: primaryColor);
+              partnerLocation: partnerLocation,
+              polylineCoordinates: polylineCoordinates,
+              customerLocation: customerLocation,
+              scaffoldKey: scaffoldKey,
+              primaryColor: primaryColor,
+              customerId: currentService.customerId,
+              acceptedService: currentService,
+              partner: widget.currentPartner,
+            );
           }
           return const Center(child: CircularProgressIndicator());
         },
@@ -96,19 +103,25 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
 class TrackerMap extends StatefulWidget {
   const TrackerMap({
-    super.key,
+    Key? key,
     required this.partnerLocation,
     required this.polylineCoordinates,
     required this.customerLocation,
     required this.scaffoldKey,
     required this.primaryColor,
-  });
+    required this.customerId,
+    required this.acceptedService,
+    required this.partner,
+  }) : super(key: key);
 
   final LatLng partnerLocation;
   final List<LatLng> polylineCoordinates;
   final LatLng customerLocation;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final Color primaryColor;
+  final String customerId;
+  final AcceptedServiceEntity acceptedService;
+  final PartnerEntity partner;
 
   @override
   State<TrackerMap> createState() => _TrackerMapState();
@@ -143,6 +156,7 @@ class _TrackerMapState extends State<TrackerMap> {
   @override
   void initState() {
     getPolyPoints();
+    BlocProvider.of<UserCubit>(context).getUsers();
     super.initState();
   }
 
@@ -180,6 +194,25 @@ class _TrackerMapState extends State<TrackerMap> {
           child: HamburgerMenuButton(
             scaffoldKey: widget.scaffoldKey,
             primaryColor: widget.primaryColor,
+          ),
+        ),
+        Positioned(
+          bottom: getProportionateScreenHeight(66),
+          left: getProportionateScreenWidth(32),
+          right: getProportionateScreenWidth(32),
+          child: BlocBuilder<UserCubit, UserState>(
+            builder: (_, state) {
+              if (state is UserLoaded) {
+                final customer = state.users
+                    .firstWhere((user) => user.uid == widget.customerId);
+                return TrackerInfoCard(
+                  customer: customer,
+                  acceptedService: widget.acceptedService,
+                  partner: widget.partner,
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
           ),
         ),
         // const NoResultsBody(),
