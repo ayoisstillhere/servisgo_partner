@@ -4,6 +4,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
+import 'package:servisgo_partner/features/tracker/presentation/widgets/no_results_body.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../components/side_menu.dart';
@@ -83,6 +84,11 @@ class _TrackerScreenState extends State<TrackerScreen> {
               currentService.latitudeCustomer!,
               currentService.longitudePartner!,
             );
+            if (currentService.id == "") {
+              return NoResultsBody(
+                currentPartner: widget.currentPartner,
+              );
+            }
             return TrackerMap(
               partnerLocation: partnerLocation,
               polylineCoordinates: polylineCoordinates,

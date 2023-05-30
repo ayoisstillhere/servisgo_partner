@@ -18,7 +18,7 @@ class _BodyState extends State<Body> {
   List<Map<String, String>> onboardingData = [
     {
       "image": "assets/images/Onboarding1.png",
-      "header": "Welcome to ServisGo User",
+      "header": "Welcome to ServisGo Partner",
       "text":
           "Thank you for joining our community of home service providers. With this app, you can easily connect with customers in need of home services, manage your appointments and earnings, and build your reputation.",
     },
