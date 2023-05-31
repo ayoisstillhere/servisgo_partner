@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
 import 'package:servisgo_partner/features/tracker/presentation/widgets/no_results_body.dart';
@@ -134,6 +137,43 @@ class TrackerMap extends StatefulWidget {
 }
 
 class _TrackerMapState extends State<TrackerMap> {
+  final Completer<GoogleMapController> _controller = Completer();
+  StreamSubscription<LocationData>? _locationSubscription;
+
+  LocationData? currentLocation;
+  bool isLoading = true; // Added flag to track loading state
+
+  void getCurrentLocation() async {
+    Location location = Location();
+
+    currentLocation = await location.getLocation();
+
+    GoogleMapController googleMapController = await _controller.future;
+
+    _locationSubscription = location.onLocationChanged.listen((newLoc) {
+      currentLocation = newLoc;
+
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            zoom: 13.5,
+            target: LatLng(
+              newLoc.latitude!,
+              newLoc.longitude!,
+            ),
+          ),
+        ),
+      );
+      if (mounted) {
+        setState(() {});
+      }
+    });
+     // Set loading state to false once the location is retrieved
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
 
@@ -150,52 +190,81 @@ class _TrackerMapState extends State<TrackerMap> {
     );
 
     if (result.points.isNotEmpty) {
-      result.points.forEach(
-        (PointLatLng point) => widget.polylineCoordinates.add(
+      for (var point in result.points) {
+        widget.polylineCoordinates.add(
           LatLng(point.latitude, point.longitude),
-        ),
-      );
+        );
+      }
       setState(() {});
     }
+    // Set loading state to false once the polyline coordinates are fetched
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   void initState() {
+    getCurrentLocation();
     getPolyPoints();
     BlocProvider.of<UserCubit>(context).getUsers();
     super.initState();
   }
 
   @override
+  void dispose() {
+    _locationSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GoogleMap(
-          mapType: MapType.normal,
-          myLocationButtonEnabled: true,
-          initialCameraPosition: CameraPosition(
-            target: widget.partnerLocation,
-            zoom: 13.5,
-          ),
-          polylines: {
-            Polyline(
-              polylineId: const PolylineId("route"),
-              points: widget.polylineCoordinates,
-              color: kPrimaryColor,
-              width: 6,
-            ),
-          },
-          markers: {
-            Marker(
-              markerId: const MarkerId("Partner"),
-              position: widget.partnerLocation,
-            ),
-            Marker(
-              markerId: const MarkerId("Customer"),
-              position: widget.customerLocation,
-            ),
-          },
-        ),
+        if (isLoading) // Render the circular progress indicator if loading is true
+          const Center(child: CircularProgressIndicator())
+        else // Render the Google Map widget once the required data is available
+          currentLocation == null
+              ? const Center(child: Text('Unable to retrieve location'))
+              :GoogleMap(
+                mapType: MapType.normal,
+                myLocationButtonEnabled: true,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    currentLocation!.latitude!,
+                    currentLocation!.longitude!,
+                  ),
+                  zoom: 13.5,
+                ),
+                onMapCreated: (mapController) {
+                  _controller.complete(mapController);
+                },
+                polylines: {
+                  Polyline(
+                    polylineId: const PolylineId("route"),
+                    points: widget.polylineCoordinates,
+                    color: kPrimaryColor,
+                    width: 6,
+                  ),
+                },
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("currentLocation"),
+                    position: LatLng(
+                      currentLocation!.latitude!,
+                      currentLocation!.longitude!,
+                    ),
+                  ),
+                  Marker(
+                    markerId: const MarkerId("Partner"),
+                    position: widget.partnerLocation,
+                  ),
+                  Marker(
+                    markerId: const MarkerId("Customer"),
+                    position: widget.customerLocation,
+                  ),
+                },
+              ),
         Positioned(
           top: getProportionateScreenHeight(58),
           left: getProportionateScreenWidth(32),
