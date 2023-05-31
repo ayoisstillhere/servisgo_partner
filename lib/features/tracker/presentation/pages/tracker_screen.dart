@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -17,6 +18,7 @@ import '../../../auth/domain/entities/partner_entity.dart';
 import '../../data/models/accepted_service_model.dart';
 import '../../domain/entities/accepted_service_entity.dart';
 import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
+import '../widgets/arrived_dialog_content.dart';
 import '../widgets/tracker_info_card.dart';
 
 class TrackerScreen extends StatefulWidget {
@@ -142,6 +144,8 @@ class _TrackerMapState extends State<TrackerMap> {
 
   LocationData? currentLocation;
   bool isLoading = true; // Added flag to track loading state
+  bool hasArrived =
+      false; // Bool to check whether partner has arrived at customers location
 
   void getCurrentLocation() async {
     Location location = Location();
@@ -164,14 +168,32 @@ class _TrackerMapState extends State<TrackerMap> {
           ),
         ),
       );
+
+      // Check if the partner has arrived
+      double distance = Geolocator.distanceBetween(
+        currentLocation!.latitude!,
+        currentLocation!.longitude!,
+        widget.customerLocation.latitude,
+        widget.customerLocation.longitude,
+      );
+      if (distance <= 100) {
+        // Assuming 100 meters is considered "arrived"
+        setState(() {
+          hasArrived = true;
+        });
+      }
+      print(hasArrived);
+
       if (mounted) {
         setState(() {});
       }
     });
-     // Set loading state to false once the location is retrieved
-    setState(() {
-      isLoading = false;
-    });
+    // Set loading state to false once the location is retrieved
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   void getPolyPoints() async {
@@ -195,12 +217,17 @@ class _TrackerMapState extends State<TrackerMap> {
           LatLng(point.latitude, point.longitude),
         );
       }
-      setState(() {});
+
+      if (mounted) {
+        setState(() {});
+      }
     }
     // Set loading state to false once the polyline coordinates are fetched
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -226,45 +253,45 @@ class _TrackerMapState extends State<TrackerMap> {
         else // Render the Google Map widget once the required data is available
           currentLocation == null
               ? const Center(child: Text('Unable to retrieve location'))
-              :GoogleMap(
-                mapType: MapType.normal,
-                myLocationButtonEnabled: true,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    currentLocation!.latitude!,
-                    currentLocation!.longitude!,
-                  ),
-                  zoom: 13.5,
-                ),
-                onMapCreated: (mapController) {
-                  _controller.complete(mapController);
-                },
-                polylines: {
-                  Polyline(
-                    polylineId: const PolylineId("route"),
-                    points: widget.polylineCoordinates,
-                    color: kPrimaryColor,
-                    width: 6,
-                  ),
-                },
-                markers: {
-                  Marker(
-                    markerId: const MarkerId("currentLocation"),
-                    position: LatLng(
+              : GoogleMap(
+                  mapType: MapType.normal,
+                  myLocationButtonEnabled: true,
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(
                       currentLocation!.latitude!,
                       currentLocation!.longitude!,
                     ),
+                    zoom: 13.5,
                   ),
-                  Marker(
-                    markerId: const MarkerId("Partner"),
-                    position: widget.partnerLocation,
-                  ),
-                  Marker(
-                    markerId: const MarkerId("Customer"),
-                    position: widget.customerLocation,
-                  ),
-                },
-              ),
+                  onMapCreated: (mapController) {
+                    _controller.complete(mapController);
+                  },
+                  polylines: {
+                    Polyline(
+                      polylineId: const PolylineId("route"),
+                      points: widget.polylineCoordinates,
+                      color: kPrimaryColor,
+                      width: 6,
+                    ),
+                  },
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId("currentLocation"),
+                      position: LatLng(
+                        currentLocation!.latitude!,
+                        currentLocation!.longitude!,
+                      ),
+                    ),
+                    Marker(
+                      markerId: const MarkerId("Partner"),
+                      position: widget.partnerLocation,
+                    ),
+                    Marker(
+                      markerId: const MarkerId("Customer"),
+                      position: widget.customerLocation,
+                    ),
+                  },
+                ),
         Positioned(
           top: getProportionateScreenHeight(58),
           left: getProportionateScreenWidth(32),
@@ -292,6 +319,18 @@ class _TrackerMapState extends State<TrackerMap> {
             },
           ),
         ),
+        hasArrived
+            ? const Center(
+                child: AlertDialog(
+                  content: ArrivedDialogContent(),
+                ),
+              )
+            : const Center(
+                child: SizedBox(
+                height: 0,
+                width: 0,
+              )),
+        
         // const NoResultsBody(),
       ],
     );
