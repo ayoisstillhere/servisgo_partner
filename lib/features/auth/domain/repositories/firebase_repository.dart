@@ -47,4 +47,5 @@ abstract class FirebaseRepository {
     String jobRequestId,
   );
   Stream<List<AcceptedServiceEntity>> getAcceptedServices();
+  Future<void> updateServiceToOnGoing(String serviceId);
 }

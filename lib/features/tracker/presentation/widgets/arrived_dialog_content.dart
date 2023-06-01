@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:servisgo_partner/constants.dart';
 import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
 import 'package:servisgo_partner/size_config.dart';
 
+import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
+
 class ArrivedDialogContent extends StatelessWidget {
   const ArrivedDialogContent({
-    super.key,
-  });
+    Key? key,
+    required this.acceptedSericeId,
+  }) : super(key: key);
+  final String acceptedSericeId;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +53,10 @@ class ArrivedDialogContent extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    BlocProvider.of<AcceptedServiceCubit>(context)
+                        .updateServiceToOnGoing(
+                      acceptedSericeId,
+                    );
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -78,6 +88,10 @@ class ArrivedDialogContent extends StatelessWidget {
             top: 0,
             child: GestureDetector(
               onTap: () {
+                BlocProvider.of<AcceptedServiceCubit>(context)
+                    .updateServiceToOnGoing(
+                  acceptedSericeId,
+                );
                 Navigator.push(
                     context,
                     MaterialPageRoute(

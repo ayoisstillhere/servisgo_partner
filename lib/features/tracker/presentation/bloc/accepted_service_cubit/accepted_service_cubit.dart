@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/usecases/accept_job_request_usecase.dart';
+import 'package:servisgo_partner/features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
 
 import '../../../domain/entities/accepted_service_entity.dart';
+import '../../../domain/usecases/accept_job_request_usecase.dart';
 import '../../../domain/usecases/get_accepted_requests_usecase.dart';
 
 part 'accepted_service_state.dart';
@@ -13,9 +14,11 @@ part 'accepted_service_state.dart';
 class AcceptedServiceCubit extends Cubit<AcceptedServiceState> {
   final AcceptJobRequestUsecase acceptJobRequestUsecase;
   final GetAcceptedRequestsUsecase getAcceptedRequestsUsecase;
+  final UpdateServiceToOngoingUsecase updateServiceToOngoingUsecase;
   AcceptedServiceCubit({
     required this.acceptJobRequestUsecase,
     required this.getAcceptedRequestsUsecase,
+    required this.updateServiceToOngoingUsecase,
   }) : super(AcceptedServiceInitial());
 
   Future<void> acceptJobRequest({
@@ -66,6 +69,12 @@ class AcceptedServiceCubit extends Cubit<AcceptedServiceState> {
       acceptedRequest.listen((acceptedRequests) {
         emit(AcceptedServiceLoaded(acceptedRequests: acceptedRequests));
       });
+    } on SocketException catch (_) {}
+  }
+
+  Future<void> updateServiceToOnGoing(String serviceId) async {
+    try {
+      await updateServiceToOngoingUsecase.call(serviceId);
     } on SocketException catch (_) {}
   }
 }

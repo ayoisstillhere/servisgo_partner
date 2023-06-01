@@ -181,7 +181,6 @@ class _TrackerMapState extends State<TrackerMap> {
           hasArrived = true;
         });
       }
-      print(hasArrived);
 
       if (mounted) {
         setState(() {});
@@ -235,47 +234,47 @@ class _TrackerMapState extends State<TrackerMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-          currentLocation == null
-              ? const Center(child: CircularProgressIndicator.adaptive())
-              : GoogleMap(
-                  mapType: MapType.normal,
-                  myLocationButtonEnabled: true,
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
+        currentLocation == null
+            ? const Center(child: CircularProgressIndicator.adaptive())
+            : GoogleMap(
+                mapType: MapType.normal,
+                myLocationButtonEnabled: true,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    currentLocation!.latitude!,
+                    currentLocation!.longitude!,
+                  ),
+                  zoom: 13.5,
+                ),
+                onMapCreated: (mapController) {
+                  _controller.complete(mapController);
+                },
+                polylines: {
+                  Polyline(
+                    polylineId: const PolylineId("route"),
+                    points: widget.polylineCoordinates,
+                    color: kPrimaryColor,
+                    width: 6,
+                  ),
+                },
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("currentLocation"),
+                    position: LatLng(
                       currentLocation!.latitude!,
                       currentLocation!.longitude!,
                     ),
-                    zoom: 13.5,
                   ),
-                  onMapCreated: (mapController) {
-                    _controller.complete(mapController);
-                  },
-                  polylines: {
-                    Polyline(
-                      polylineId: const PolylineId("route"),
-                      points: widget.polylineCoordinates,
-                      color: kPrimaryColor,
-                      width: 6,
-                    ),
-                  },
-                  markers: {
-                    Marker(
-                      markerId: const MarkerId("currentLocation"),
-                      position: LatLng(
-                        currentLocation!.latitude!,
-                        currentLocation!.longitude!,
-                      ),
-                    ),
-                    Marker(
-                      markerId: const MarkerId("Partner"),
-                      position: widget.partnerLocation,
-                    ),
-                    Marker(
-                      markerId: const MarkerId("Customer"),
-                      position: widget.customerLocation,
-                    ),
-                  },
-                ),
+                  Marker(
+                    markerId: const MarkerId("Partner"),
+                    position: widget.partnerLocation,
+                  ),
+                  Marker(
+                    markerId: const MarkerId("Customer"),
+                    position: widget.customerLocation,
+                  ),
+                },
+              ),
         Positioned(
           top: getProportionateScreenHeight(58),
           left: getProportionateScreenWidth(32),
@@ -304,9 +303,11 @@ class _TrackerMapState extends State<TrackerMap> {
           ),
         ),
         hasArrived
-            ? const Center(
+            ? Center(
                 child: AlertDialog(
-                  content: ArrivedDialogContent(),
+                  content: ArrivedDialogContent(
+                    acceptedSericeId: widget.acceptedService.id,
+                  ),
                 ),
               )
             : const Center(

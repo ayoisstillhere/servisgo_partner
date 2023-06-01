@@ -58,6 +58,7 @@ abstract class FirebaseRemoteDatasource {
     String jobRequestId,
   );
   Stream<List<AcceptedServiceEntity>> getAcceptedServices();
+  Future<void> updateServiceToOnGoing(String serviceId);
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -311,5 +312,12 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
             .map(
                 (docSnapshot) => AcceptedServiceModel.fromSnapshot(docSnapshot))
             .toList());
+  }
+  
+  @override
+  Future<void> updateServiceToOnGoing(String serviceId) async {
+    await _acceptedServiceCollection.doc(serviceId).update({
+      'serviceStatus': 'Ongoing',
+    });
   }
 }

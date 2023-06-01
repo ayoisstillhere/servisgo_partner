@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:servisgo_partner/features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
 import 'features/home/domain/usecases/get_job_requests.dart';
 import 'features/home/domain/usecases/get_users_usecase.dart';
 import 'features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
@@ -66,8 +67,10 @@ Future<void> init() async {
       () => JobRequestsCubit(getJobRequestsUsecase: sl.call()));
   sl.registerFactory<UserCubit>(() => UserCubit(getUsersUsecase: sl.call()));
   sl.registerFactory<AcceptedServiceCubit>(() => AcceptedServiceCubit(
-      acceptJobRequestUsecase: sl.call(),
-      getAcceptedRequestsUsecase: sl.call()));
+        acceptJobRequestUsecase: sl.call(),
+        getAcceptedRequestsUsecase: sl.call(),
+        updateServiceToOngoingUsecase: sl.call(),
+      ));
 
   //!useCae
   sl.registerLazySingleton<IsSigninUsecase>(
@@ -112,6 +115,8 @@ Future<void> init() async {
       () => AcceptJobRequestUsecase(repository: sl.call()));
   sl.registerLazySingleton<GetAcceptedRequestsUsecase>(
       () => GetAcceptedRequestsUsecase(repository: sl.call()));
+  sl.registerLazySingleton<UpdateServiceToOngoingUsecase>(
+      () => UpdateServiceToOngoingUsecase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

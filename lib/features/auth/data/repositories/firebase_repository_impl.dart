@@ -149,4 +149,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Stream<List<AcceptedServiceEntity>> getAcceptedServices() {
     return firebaseRemoteDatasource.getAcceptedServices();
   }
+  
+  @override
+  Future<void> updateServiceToOnGoing(String serviceId) async => await firebaseRemoteDatasource.updateServiceToOnGoing(serviceId); 
 }
