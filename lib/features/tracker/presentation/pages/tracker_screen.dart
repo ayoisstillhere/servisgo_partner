@@ -143,7 +143,6 @@ class _TrackerMapState extends State<TrackerMap> {
   StreamSubscription<LocationData>? _locationSubscription;
 
   LocationData? currentLocation;
-  bool isLoading = true; // Added flag to track loading state
   bool hasArrived =
       false; // Bool to check whether partner has arrived at customers location
 
@@ -188,12 +187,6 @@ class _TrackerMapState extends State<TrackerMap> {
         setState(() {});
       }
     });
-    // Set loading state to false once the location is retrieved
-    if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
-    }
   }
 
   void getPolyPoints() async {
@@ -222,12 +215,6 @@ class _TrackerMapState extends State<TrackerMap> {
         setState(() {});
       }
     }
-    // Set loading state to false once the polyline coordinates are fetched
-    if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
-    }
   }
 
   @override
@@ -248,11 +235,8 @@ class _TrackerMapState extends State<TrackerMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        if (isLoading) // Render the circular progress indicator if loading is true
-          const Center(child: CircularProgressIndicator())
-        else // Render the Google Map widget once the required data is available
           currentLocation == null
-              ? const Center(child: Text('Unable to retrieve location'))
+              ? const Center(child: CircularProgressIndicator.adaptive())
               : GoogleMap(
                   mapType: MapType.normal,
                   myLocationButtonEnabled: true,
@@ -330,7 +314,7 @@ class _TrackerMapState extends State<TrackerMap> {
                 height: 0,
                 width: 0,
               )),
-        
+
         // const NoResultsBody(),
       ],
     );
