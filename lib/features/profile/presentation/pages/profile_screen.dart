@@ -62,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double sum = 0;
     double avgRating = 0;
     if (ratings.isNotEmpty) {
-      for (int rating in ratings) {
+      for (var rating in ratings) {
         sum += rating;
       }
       avgRating = sum / ratings.length;
@@ -193,7 +193,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: getProportionateScreenWidth(100),
                     child: Column(
                       children: [
-                        ServiceIcon(serviceClass: widget.currentPartner.serviceClass,),
+                        ServiceIcon(
+                          serviceClass: widget.currentPartner.serviceClass,
+                        ),
                         SizedBox(height: getProportionateScreenHeight(8)),
                         Text(
                           widget.currentPartner.serviceClass,
@@ -207,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "$avgRating",
+                          avgRating.toStringAsFixed(1),
                           style: Theme.of(context)
                               .textTheme
                               .displayLarge!
