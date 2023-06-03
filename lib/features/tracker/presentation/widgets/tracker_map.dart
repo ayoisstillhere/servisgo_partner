@@ -60,14 +60,14 @@ class _TrackerMapState extends State<TrackerMap> {
   void getCurrentLocation() async {
     Location location = Location();
 
-    // print("getting location");
+    print("getting location");
     await location.getLocation().then(
       (location) {
         currentLocation = location;
       },
     );
-    // print("got location");
-    // print(currentLocation);
+    print("got location");
+    print(currentLocation);
 
     GoogleMapController googleMapController = await _controller.future;
 
@@ -144,7 +144,7 @@ class _TrackerMapState extends State<TrackerMap> {
     return Stack(
       children: [
         currentLocation == null
-            ? const Center(child: CircularProgressIndicator.adaptive())
+            ? const Center(child: CircularProgressIndicator())
             : GoogleMap(
                 mapType: MapType.normal,
                 myLocationButtonEnabled: true,
