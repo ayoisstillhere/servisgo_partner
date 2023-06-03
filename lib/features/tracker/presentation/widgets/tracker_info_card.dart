@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
 import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
@@ -130,12 +131,21 @@ class TrackerInfoCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: SvgPicture.asset("assets/icons/trackerCall.svg"),
+                  GestureDetector(
+                    onTap: () async {
+                      Uri dialnumber = Uri(
+                        scheme: 'tel',
+                        path: customer.phoneNumber,
+                      );
+                      await launchUrl(dialnumber);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: SvgPicture.asset("assets/icons/trackerCall.svg"),
+                    ),
                   ),
                   SizedBox(width: getProportionateScreenWidth(4)),
                   GestureDetector(
