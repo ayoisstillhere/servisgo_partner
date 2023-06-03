@@ -63,7 +63,9 @@ class _TrackerMapState extends State<TrackerMap> {
     print("getting location");
     await location.getLocation().then(
       (location) {
-        currentLocation = location;
+        setState(() {
+          currentLocation = location;
+        });
       },
     );
     print("got location");
