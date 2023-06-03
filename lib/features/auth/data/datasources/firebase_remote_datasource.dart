@@ -8,6 +8,8 @@ import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 import 'package:servisgo_partner/features/home/data/models/job_request_model.dart';
 import 'package:servisgo_partner/features/tracker/data/models/accepted_service_model.dart';
 
+import '../../../chat/data/models/text_message_model.dart';
+import '../../../chat/domain/entities/text_message_entity.dart';
 import '../../../home/data/models/user_model.dart';
 import '../../../home/domain/entities/job_request_entity.dart';
 import '../../../home/domain/entities/user_entity.dart';
@@ -59,6 +61,8 @@ abstract class FirebaseRemoteDatasource {
   );
   Stream<List<AcceptedServiceEntity>> getAcceptedServices();
   Future<void> updateServiceToOnGoing(String serviceId);
+  Future<void> sendTextMessage(TextMessageEntity textMessage);
+  Stream<List<TextMessageEntity>> getTextMessages();
 }
 
 class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
@@ -69,6 +73,7 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
   final _userCollection = FirebaseFirestore.instance.collection("users");
   final _acceptedServiceCollection =
       FirebaseFirestore.instance.collection("acceptedServices");
+  final _chatCollection = FirebaseFirestore.instance.collection("chats");
   final googleSignin = GoogleSignIn(scopes: ['email']);
 
   GoogleSignInAccount? _user;
@@ -313,11 +318,31 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
                 (docSnapshot) => AcceptedServiceModel.fromSnapshot(docSnapshot))
             .toList());
   }
-  
+
   @override
   Future<void> updateServiceToOnGoing(String serviceId) async {
     await _acceptedServiceCollection.doc(serviceId).update({
       'serviceStatus': 'Ongoing',
     });
+  }
+
+  @override
+  Stream<List<TextMessageEntity>> getTextMessages() {
+    return _chatCollection.snapshots().map((querySnapshot) => querySnapshot.docs
+        .map((docSnapshot) => TextMessageModel.fromSnapshot(docSnapshot))
+        .toList());
+  }
+
+  @override
+  Future<void> sendTextMessage(TextMessageEntity textMessage) async {
+    final newMessage = TextMessageModel(
+      recipientId: textMessage.recipientId,
+      senderId: textMessage.senderId,
+      timestamp: textMessage.timestamp,
+      message: textMessage.message,
+      recipientName: textMessage.recipientName,
+      senderName: textMessage.senderName,
+    );
+    _chatCollection.add(newMessage.toDocument());
   }
 }

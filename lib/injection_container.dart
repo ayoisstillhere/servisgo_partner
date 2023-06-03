@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:servisgo_partner/features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
+import 'features/chat/domain/usecases/get_text_messages_usecase.dart';
+import 'features/chat/domain/usecases/send_text_message_usecase.dart';
+import 'features/chat/presentation/bloc/chat_cubit/chat_cubit.dart';
 import 'features/home/domain/usecases/get_job_requests.dart';
 import 'features/home/domain/usecases/get_users_usecase.dart';
 import 'features/home/presentation/bloc/job_requests_cubit/job_requests_cubit.dart';
@@ -71,6 +74,10 @@ Future<void> init() async {
         getAcceptedRequestsUsecase: sl.call(),
         updateServiceToOngoingUsecase: sl.call(),
       ));
+  sl.registerFactory<ChatCubit>(() => ChatCubit(
+        getMessagesUsecase: sl.call(),
+        sendTextMessageUseCase: sl.call(),
+      ));
 
   //!useCae
   sl.registerLazySingleton<IsSigninUsecase>(
@@ -117,6 +124,10 @@ Future<void> init() async {
       () => GetAcceptedRequestsUsecase(repository: sl.call()));
   sl.registerLazySingleton<UpdateServiceToOngoingUsecase>(
       () => UpdateServiceToOngoingUsecase(repository: sl.call()));
+  sl.registerLazySingleton<GetMessagesUsecase>(
+      () => GetMessagesUsecase(repository: sl.call()));
+  sl.registerLazySingleton<SendTextMessageUseCase>(
+      () => SendTextMessageUseCase(repository: sl.call()));
 
   //repository
   sl.registerLazySingleton<FirebaseRepository>(

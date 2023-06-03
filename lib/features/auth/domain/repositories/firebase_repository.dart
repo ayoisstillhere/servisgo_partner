@@ -1,3 +1,4 @@
+import '../../../chat/domain/entities/text_message_entity.dart';
 import '../../../home/domain/entities/job_request_entity.dart';
 
 import '../../../home/domain/entities/user_entity.dart';
@@ -48,4 +49,6 @@ abstract class FirebaseRepository {
   );
   Stream<List<AcceptedServiceEntity>> getAcceptedServices();
   Future<void> updateServiceToOnGoing(String serviceId);
+  Future<void> sendTextMessage(TextMessageEntity textMessage);
+  Stream<List<TextMessageEntity>> getTextMessages();
 }

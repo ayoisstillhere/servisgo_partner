@@ -7,6 +7,7 @@ import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart'
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../../../chat/presentation/pages/chat_screen.dart';
 import '../../domain/entities/accepted_service_entity.dart';
 
 class TrackerInfoCard extends StatelessWidget {
@@ -137,12 +138,23 @@ class TrackerInfoCard extends StatelessWidget {
                     child: SvgPicture.asset("assets/icons/trackerCall.svg"),
                   ),
                   SizedBox(width: getProportionateScreenWidth(4)),
-                  Container(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(7)),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: SvgPicture.asset("assets/icons/trackerChat.svg"),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatScreen(
+                                    partner: partner,
+                                    user: customer,
+                                  )));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(getProportionateScreenWidth(7)),
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: SvgPicture.asset("assets/icons/trackerChat.svg"),
+                    ),
                   ),
                 ],
               ),

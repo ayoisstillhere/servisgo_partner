@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../../../auth/domain/entities/partner_entity.dart';
+import '../../../home/domain/entities/user_entity.dart';
 import '../pages/chat_screen.dart';
 
 class MessageTile extends StatelessWidget {
@@ -11,24 +14,27 @@ class MessageTile extends StatelessWidget {
     required this.name,
     required this.lastMsg,
     required this.time,
-    required this.noOfMessages,
+    required this.currentUser,
+    required this.currentPartner,
   }) : super(key: key);
   final String imgUrl;
   final String name;
   final String lastMsg;
   final String time;
-  final int noOfMessages;
+  final UserEntity currentUser;
+  final PartnerEntity currentPartner;
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor =
-        MediaQuery.of(context).platformBrightness == Brightness.dark
-            ? kDarkPrimaryColor
-            : kPrimaryColor;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ChatScreen(name: name)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                      partner: currentPartner,
+                      user: currentUser,
+                    )));
       },
       child: Column(
         children: [
@@ -95,42 +101,12 @@ class MessageTile extends StatelessWidget {
               ),
               SizedBox(
                 height: getProportionateScreenHeight(48),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      time,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: kGreys),
-                    ),
-                    noOfMessages != 0
-                        ? Container(
-                            height: getProportionateScreenHeight(24),
-                            width: getProportionateScreenWidth(24),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primaryColor,
-                            ),
-                            child: Center(
-                              child: Text(
-                                "$noOfMessages",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                        color: MediaQuery.of(context)
-                                                    .platformBrightness ==
-                                                Brightness.dark
-                                            ? Colors.black
-                                            : Colors.white),
-                              ),
-                            ),
-                          )
-                        : Container(),
-                  ],
+                child: Text(
+                  time,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: kGreys),
                 ),
               ),
             ],

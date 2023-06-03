@@ -50,6 +50,7 @@ class _TrackerMapState extends State<TrackerMap> {
     BlocProvider.of<UserCubit>(context).getUsers();
     super.initState();
   }
+
   final Completer<GoogleMapController> _controller = Completer();
 
   LocationData? currentLocation;
@@ -59,14 +60,14 @@ class _TrackerMapState extends State<TrackerMap> {
   void getCurrentLocation() async {
     Location location = Location();
 
-    print("getting location");
+    // print("getting location");
     await location.getLocation().then(
       (location) {
         currentLocation = location;
       },
     );
-    print("got location");
-    print(currentLocation);
+    // print("got location");
+    // print(currentLocation);
 
     GoogleMapController googleMapController = await _controller.future;
 
@@ -89,9 +90,7 @@ class _TrackerMapState extends State<TrackerMap> {
             ),
           ),
         );
-      } on Exception catch (_) {
-        print("Exception");
-      }
+      } on Exception catch (_) {}
 
       // Check if the partner has arrived
       double distance = Geolocator.distanceBetween(

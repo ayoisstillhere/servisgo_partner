@@ -68,7 +68,9 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProfileScreen(currentPartner: currentPartner,)));
+                          builder: (context) => ProfileScreen(
+                                currentPartner: currentPartner,
+                              )));
                 },
               ),
               DrawerTile(
@@ -91,7 +93,9 @@ class SideMenu extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => TrackerScreen(currentPartner: currentPartner,)));
+                          builder: (context) => TrackerScreen(
+                                currentPartner: currentPartner,
+                              )));
                 },
               ),
               DrawerTile(
@@ -111,9 +115,13 @@ class SideMenu extends StatelessWidget {
                 title: "Messages",
                 press: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MessagesScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MessagesScreen(
+                        currentPartner: currentPartner,
+                      ),
+                    ),
+                  );
                 },
               ),
               const Divider(color: kOutlineVariant),
