@@ -50,7 +50,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.partner.partnerName,
+          widget.user.name,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         actions: [
