@@ -6,7 +6,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:servisgo_partner/features/tracker/presentation/widgets/tracker_info_card.dart';
+import 'tracker_info_card.dart';
 
 import '../../../../components/hamburger_menu_button.dart';
 import '../../../../constants.dart';

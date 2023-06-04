@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:servisgo_partner/features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
+import '../../../domain/usecases/update_service_to_ongoing_usecase.dart';
 
 import '../../../domain/entities/accepted_service_entity.dart';
 import '../../../domain/usecases/accept_job_request_usecase.dart';

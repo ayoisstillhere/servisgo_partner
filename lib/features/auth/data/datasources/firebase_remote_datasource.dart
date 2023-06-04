@@ -2,11 +2,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 import 'package:servisgo_partner/features/home/data/models/job_request_model.dart';
 import 'package:servisgo_partner/features/tracker/data/models/accepted_service_model.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../chat/data/models/text_message_model.dart';
 import '../../../chat/domain/entities/text_message_entity.dart';
@@ -15,7 +15,6 @@ import '../../../home/domain/entities/job_request_entity.dart';
 import '../../../home/domain/entities/user_entity.dart';
 import '../../../tracker/domain/entities/accepted_service_entity.dart';
 import '../../domain/entities/partner_entity.dart';
-import 'package:uuid/uuid.dart';
 
 abstract class FirebaseRemoteDatasource {
   Future<void> signUp(String email, String password);

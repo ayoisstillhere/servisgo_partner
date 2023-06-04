@@ -1,13 +1,13 @@
 import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../auth/domain/entities/partner_entity.dart';
 import '../../../../auth/domain/usecases/update_name_usecase.dart';
 import '../../../../auth/domain/usecases/update_phone_usecase.dart';
 import '../../../domain/usecases/get_partners_usecase.dart';
 import '../../../domain/usecases/update_status_usecase.dart';
-
-import '../../../../auth/domain/entities/partner_entity.dart';
 
 part 'partner_state.dart';
 

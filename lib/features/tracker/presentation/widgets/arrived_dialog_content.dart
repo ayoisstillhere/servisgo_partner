@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:servisgo_partner/constants.dart';
-import 'package:servisgo_partner/features/home/presentation/pages/home_screen.dart';
-import 'package:servisgo_partner/size_config.dart';
+import '../../../../constants.dart';
+import '../../../home/presentation/pages/home_screen.dart';
+import '../../../../size_config.dart';
 
 import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
 

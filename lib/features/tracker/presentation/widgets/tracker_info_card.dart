@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
-import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
+import '../../../auth/domain/entities/partner_entity.dart';
+import '../../../home/domain/entities/user_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants.dart';

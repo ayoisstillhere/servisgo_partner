@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:servisgo_partner/features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
+import 'features/tracker/domain/usecases/update_service_to_ongoing_usecase.dart';
 import 'features/chat/domain/usecases/get_text_messages_usecase.dart';
 import 'features/chat/domain/usecases/send_text_message_usecase.dart';
 import 'features/chat/presentation/bloc/chat_cubit/chat_cubit.dart';

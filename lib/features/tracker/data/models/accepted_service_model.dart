@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../domain/entities/accepted_service_entity.dart';
 
 class AcceptedServiceModel extends AcceptedServiceEntity {

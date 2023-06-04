@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../bloc/partner_cubit/partner_cubit.dart';
-import '../pages/home_screen.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../components/hamburger_menu_button.dart';
@@ -10,6 +8,8 @@ import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../../../auth/domain/entities/partner_entity.dart';
+import '../bloc/partner_cubit/partner_cubit.dart';
+import '../pages/home_screen.dart';
 
 class OfflineHome extends StatelessWidget {
   const OfflineHome({

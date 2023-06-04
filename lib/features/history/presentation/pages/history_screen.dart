@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:servisgo_partner/features/auth/domain/entities/partner_entity.dart';
+import '../../../auth/domain/entities/partner_entity.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';

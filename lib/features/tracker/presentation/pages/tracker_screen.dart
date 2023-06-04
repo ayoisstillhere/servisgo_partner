@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:servisgo_partner/features/tracker/presentation/widgets/no_results_body.dart';
+import '../widgets/no_results_body.dart';
 
 import '../../../../components/side_menu.dart';
 import '../../../../constants.dart';
