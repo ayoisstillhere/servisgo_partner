@@ -71,7 +71,7 @@ class _TrackerMapState extends State<TrackerMap> {
     print("got location");
     print(currentLocation);
 
-    GoogleMapController googleMapController = await _controller.future;
+    // GoogleMapController googleMapController = await _controller.future;
 
     location.onLocationChanged.listen((newLoc) {
       currentLocation = newLoc;
@@ -80,19 +80,19 @@ class _TrackerMapState extends State<TrackerMap> {
         setState(() {});
       }
 
-      try {
-        googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              zoom: 13.5,
-              target: LatLng(
-                newLoc.latitude!,
-                newLoc.longitude!,
-              ),
-            ),
-          ),
-        );
-      } on Exception catch (_) {}
+      // try {
+      //   googleMapController.animateCamera(
+      //     CameraUpdate.newCameraPosition(
+      //       CameraPosition(
+      //         zoom: 13.5,
+      //         target: LatLng(
+      //           newLoc.latitude!,
+      //           newLoc.longitude!,
+      //         ),
+      //       ),
+      //     ),
+      //   );
+      // } on Exception catch (_) {}
 
       // Check if the partner has arrived
       double distance = Geolocator.distanceBetween(

@@ -167,7 +167,7 @@ class SideMenu extends StatelessWidget {
               currentPartner.status == "online"
                   ? GestureDetector(
                       onTap: () {
-                        update(context);
+                        goOffline(context);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -210,7 +210,8 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  Future<void> update(BuildContext context) async {
+  Future<void> goOffline(BuildContext context) async {
     await BlocProvider.of<PartnerCubit>(context).updateStatus("offline");
   }
 }
+
