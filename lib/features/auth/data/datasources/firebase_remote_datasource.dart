@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:servisgo_partner/features/auth/data/models/partner_model.dart';
 import 'package:servisgo_partner/features/home/data/models/job_request_model.dart';
@@ -74,6 +75,7 @@ class FirebaseRemoteDatasourceImpl implements FirebaseRemoteDatasource {
       FirebaseFirestore.instance.collection("acceptedServices");
   final _chatCollection = FirebaseFirestore.instance.collection("chats");
   final googleSignin = GoogleSignIn(scopes: ['email']);
+  final _firebaseMessaging = FirebaseMessaging.instance;
 
   GoogleSignInAccount? _user;
 
