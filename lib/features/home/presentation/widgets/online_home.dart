@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:location/location.dart';
 import '../../domain/entities/job_request_entity.dart';
 import '../../domain/entities/user_entity.dart';
@@ -64,7 +65,12 @@ class _OnlineHomeState extends State<OnlineHome> {
         if (state is JobRequestsLoaded) {
           return _scaffoldBody(context, state);
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+          child: SpinKitPulsingGrid(
+            color: kPrimaryColor,
+            size: getProportionateScreenWidth(50),
+          ),
+        );
       },
     );
   }
@@ -102,7 +108,12 @@ class _OnlineHomeState extends State<OnlineHome> {
         },
         builder: (context, state) {
           if (state is AcceptedServiceLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitPulsingGrid(
+                color: kPrimaryColor,
+                size: getProportionateScreenWidth(50),
+              ),
+            );
           }
           return Padding(
             padding: EdgeInsets.symmetric(
@@ -130,8 +141,12 @@ class _OnlineHomeState extends State<OnlineHome> {
                               return _jobRequestListView(
                                   availableJobRequests, state);
                             }
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return Center(
+                              child: SpinKitPulsingGrid(
+                                color: kPrimaryColor,
+                                size: getProportionateScreenWidth(50),
+                              ),
+                            );
                           },
                         ),
                       ],

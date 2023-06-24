@@ -156,12 +156,17 @@ class SideMenu extends StatelessWidget {
                 press: () async {
                   await BlocProvider.of<AuthCubit>(context).loggedOut();
                   await BlocProvider.of<SigninCubit>(context).submitSignOut();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const OnboardingScreen()),
-                    (route) => false,
-                  );
+                  // Navigator.pushAndRemoveUntil(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const OnboardingScreen()),
+                  //   (route) => false,
+                  // );
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const OnboardingScreen()),
+                );
                 },
               ),
               currentPartner.status == "online"

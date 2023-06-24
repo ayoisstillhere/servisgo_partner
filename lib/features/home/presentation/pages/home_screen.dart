@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../../constants.dart';
+import '../../../../size_config.dart';
 import '../../../auth/data/models/partner_model.dart';
 import '../widgets/offline_home.dart';
 import '../bloc/partner_cubit/partner_cubit.dart';
@@ -29,7 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
         if (state is PartnerLoaded) {
           return _homeBody(context, state);
         }
-        return const Center(child: CircularProgressIndicator());
+        return Center(
+          child: SpinKitPulsingGrid(
+            color: kPrimaryColor,
+            size: getProportionateScreenWidth(100),
+          ),
+        );
       },
     );
   }

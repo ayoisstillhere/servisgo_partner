@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -146,7 +147,12 @@ class _TrackerMapState extends State<TrackerMap> {
     return Stack(
       children: [
         currentLocation == null
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(
+                child: SpinKitPulsingGrid(
+                  color: kPrimaryColor,
+                  size: getProportionateScreenWidth(50),
+                ),
+              )
             : GoogleMap(
                 mapType: MapType.normal,
                 myLocationButtonEnabled: true,
@@ -209,7 +215,12 @@ class _TrackerMapState extends State<TrackerMap> {
                   partner: widget.partner,
                 );
               }
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                child: SpinKitPulsingGrid(
+                  color: kPrimaryColor,
+                  size: getProportionateScreenWidth(50),
+                ),
+              );
             },
           ),
         ),

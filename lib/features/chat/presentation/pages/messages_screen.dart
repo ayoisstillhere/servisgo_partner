@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../constants.dart';
 import '../../../auth/domain/entities/partner_entity.dart';
 import '../../../home/domain/entities/user_entity.dart';
 import '../../../home/presentation/bloc/user_cubit/user_cubit.dart';
@@ -106,13 +108,23 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         ),
                       );
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: SpinKitPulsingGrid(
+                        color: kPrimaryColor,
+                        size: getProportionateScreenWidth(100),
+                      ),
+                    );
                   },
                 );
               },
             );
           }
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: SpinKitPulsingGrid(
+              color: kPrimaryColor,
+              size: getProportionateScreenWidth(100),
+            ),
+          );
         },
       ),
     );

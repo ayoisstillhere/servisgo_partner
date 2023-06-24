@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -61,43 +62,47 @@ class JobRequestCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: getProportionateScreenHeight(8)),
-                        Row(
-                          children: [
-                            Text(
-                              date,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: kGreys,
-                                  ),
-                            ),
-                            SizedBox(width: getProportionateScreenWidth(12)),
-                            Text(
-                              time,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: kGreys,
-                                  ),
-                            )
-                          ],
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(
+                            name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontWeight: FontWeight.w600),
+                            maxLines: 1, // Limit the number of lines to 2
+                            minFontSize: 10,
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(8)),
+                          Row(
+                            children: [
+                              Text(
+                                date,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: kGreys,
+                                    ),
+                              ),
+                              SizedBox(width: getProportionateScreenWidth(12)),
+                              Text(
+                                time,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: kGreys,
+                                    ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -158,7 +163,7 @@ class JobRequestCard extends StatelessWidget {
                   ),
                   SizedBox(height: getProportionateScreenHeight(4)),
                   Text(
-                    "#$price",
+                    "₦$price",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

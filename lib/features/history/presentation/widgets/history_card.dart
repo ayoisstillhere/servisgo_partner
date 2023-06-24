@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:servisgo_partner/features/home/domain/entities/user_entity.dart';
 import 'package:servisgo_partner/features/home/presentation/bloc/user_cubit/user_cubit.dart';
@@ -37,8 +38,8 @@ class _HistoryCardState extends State<HistoryCard> {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state is UserLoaded) {
-          final UserEntity user = state.users
-              .firstWhere((user) => user.uid == widget.customerId);
+          final UserEntity user =
+              state.users.firstWhere((user) => user.uid == widget.customerId);
           return Column(
             children: [
               Container(
@@ -87,7 +88,7 @@ class _HistoryCardState extends State<HistoryCard> {
                             ),
                             SizedBox(height: getProportionateScreenHeight(4)),
                             Text(
-                              "#${widget.price}",
+                              "₦${widget.price}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -164,8 +165,11 @@ class _HistoryCardState extends State<HistoryCard> {
             ],
           );
         }
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
+        return Center(
+          child: SpinKitPulsingGrid(
+            color: kPrimaryColor,
+            size: getProportionateScreenWidth(100),
+          ),
         );
       },
     );

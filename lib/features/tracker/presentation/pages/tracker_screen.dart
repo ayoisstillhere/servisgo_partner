@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../widgets/no_results_body.dart';
 
@@ -11,6 +11,7 @@ import '../../../auth/domain/entities/partner_entity.dart';
 import '../../data/models/accepted_service_model.dart';
 import '../bloc/accepted_service_cubit/accepted_service_cubit.dart';
 import '../widgets/tracker_map.dart';
+
 class TrackerScreen extends StatefulWidget {
   const TrackerScreen({
     Key? key,
@@ -95,7 +96,12 @@ class _TrackerScreenState extends State<TrackerScreen> {
               partner: widget.currentPartner,
             );
           }
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: SpinKitPulsingGrid(
+              color: kPrimaryColor,
+              size: getProportionateScreenWidth(100),
+            ),
+          );
         },
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../auth/domain/entities/partner_entity.dart';
 
@@ -204,7 +205,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     );
                   }
                 }
-                return const CircularProgressIndicator();
+                return SpinKitPulsingGrid(
+                  color: kPrimaryColor,
+                  size: getProportionateScreenWidth(100),
+                );
               },
             ),
           ],
